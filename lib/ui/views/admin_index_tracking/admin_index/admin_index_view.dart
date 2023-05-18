@@ -20,10 +20,9 @@ class AdminIndexView extends StatelessWidget {
       ) {
         return const Scaffold(
           body: Center(
-            child: Text(
-              'AdminIndexView asdas asda aasdsda a',
-            ),
-          ),
+              child: CircularProgressIndicator(
+            color: Colors.grey,
+          )),
         );
       },
     );

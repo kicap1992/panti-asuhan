@@ -5,24 +5,26 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i5;
+import 'package:flutter/material.dart' as _i6;
 import 'package:flutter/material.dart';
 import 'package:panti_asuhan/ui/views/admin_index_tracking/admin_index/admin_index_view.dart'
-    as _i6;
+    as _i7;
 import 'package:panti_asuhan/ui/views/admin_index_tracking/admin_index_tracking_view.dart'
     as _i4;
 import 'package:panti_asuhan/ui/views/admin_index_tracking/dana_sosial_admin/dana_sosial_admin_view.dart'
-    as _i7;
-import 'package:panti_asuhan/ui/views/admin_index_tracking/data_siswa/data_siswa_view.dart'
     as _i8;
-import 'package:panti_asuhan/ui/views/admin_index_tracking/profil/profil_view.dart'
+import 'package:panti_asuhan/ui/views/admin_index_tracking/data_siswa/data_siswa_view.dart'
     as _i9;
+import 'package:panti_asuhan/ui/views/admin_index_tracking/profil/profil_view.dart'
+    as _i10;
 import 'package:panti_asuhan/ui/views/login_screen/login_screen_view.dart'
     as _i3;
 import 'package:panti_asuhan/ui/views/splash_screen/splash_screen_view.dart'
     as _i2;
+import 'package:panti_asuhan/ui/views/tambah_dana_sosial/tambah_dana_sosial_view.dart'
+    as _i5;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i10;
+import 'package:stacked_services/stacked_services.dart' as _i11;
 
 class Routes {
   static const splashScreenView = '/';
@@ -31,10 +33,13 @@ class Routes {
 
   static const adminIndexTrackingView = '/admin-index-tracking-view';
 
+  static const tambahDanaSosialView = '/tambah-dana-sosial-view';
+
   static const all = <String>{
     splashScreenView,
     loginScreenView,
     adminIndexTrackingView,
+    tambahDanaSosialView,
   };
 }
 
@@ -52,26 +57,37 @@ class StackedRouter extends _i1.RouterBase {
       Routes.adminIndexTrackingView,
       page: _i4.AdminIndexTrackingView,
     ),
+    _i1.RouteDef(
+      Routes.tambahDanaSosialView,
+      page: _i5.TambahDanaSosialView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.SplashScreenView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
+      return _i6.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.SplashScreenView(),
         settings: data,
         maintainState: false,
       );
     },
     _i3.LoginScreenView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
+      return _i6.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.LoginScreenView(),
         settings: data,
         maintainState: false,
       );
     },
     _i4.AdminIndexTrackingView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
+      return _i6.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.AdminIndexTrackingView(),
+        settings: data,
+        maintainState: false,
+      );
+    },
+    _i5.TambahDanaSosialView: (data) {
+      return _i6.MaterialPageRoute<dynamic>(
+        builder: (context) => _i5.TambahDanaSosialView(),
         settings: data,
         maintainState: false,
       );
@@ -105,47 +121,47 @@ class AdminIndexTrackingViewRouter extends _i1.RouterBase {
   final _routes = <_i1.RouteDef>[
     _i1.RouteDef(
       AdminIndexTrackingViewRoutes.adminIndexView,
-      page: _i6.AdminIndexView,
+      page: _i7.AdminIndexView,
     ),
     _i1.RouteDef(
       AdminIndexTrackingViewRoutes.danaSosialAdminView,
-      page: _i7.DanaSosialAdminView,
+      page: _i8.DanaSosialAdminView,
     ),
     _i1.RouteDef(
       AdminIndexTrackingViewRoutes.dataSiswaView,
-      page: _i8.DataSiswaView,
+      page: _i9.DataSiswaView,
     ),
     _i1.RouteDef(
       AdminIndexTrackingViewRoutes.profilView,
-      page: _i9.ProfilView,
+      page: _i10.ProfilView,
     ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
-    _i6.AdminIndexView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i6.AdminIndexView(),
+    _i7.AdminIndexView: (data) {
+      return _i6.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i7.AdminIndexView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i7.DanaSosialAdminView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i7.DanaSosialAdminView(),
+    _i8.DanaSosialAdminView: (data) {
+      return _i6.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i8.DanaSosialAdminView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i8.DataSiswaView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i8.DataSiswaView(),
+    _i9.DataSiswaView: (data) {
+      return _i6.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i9.DataSiswaView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i9.ProfilView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i9.ProfilView(),
+    _i10.ProfilView: (data) {
+      return _i6.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i10.ProfilView(),
         settings: data,
         maintainState: false,
       );
@@ -158,7 +174,7 @@ class AdminIndexTrackingViewRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i10.NavigationService {
+extension NavigatorStateExtension on _i11.NavigationService {
   Future<dynamic> navigateToSplashScreenView([
     int? routerId,
     bool preventDuplicates = true,
@@ -195,6 +211,20 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.adminIndexTrackingView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToTambahDanaSosialView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.tambahDanaSosialView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -294,6 +324,20 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.adminIndexTrackingView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithTambahDanaSosialView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.tambahDanaSosialView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

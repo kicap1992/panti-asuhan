@@ -21,14 +21,62 @@ class DanaSosialAdminView extends StatelessWidget {
         Widget? child,
       ) {
         return Scaffold(
-            body: Column(
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  width: double.infinity,
+          body: Column(
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: mainColor,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: mainGrey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Dana Sosial Bulan Ini',
+                      style: boldTextStyle.copyWith(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Total Dana Sosial',
+                          style: regularTextStyle.copyWith(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          'Rp. 1.000.000',
+                          style: regularTextStyle.copyWith(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 25),
+              Expanded(
+                child: Container(
                   decoration: BoxDecoration(
-                    color: mainColor,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
@@ -40,84 +88,38 @@ class DanaSosialAdminView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Dana Sosial Bulan Ini',
-                        style: boldTextStyle.copyWith(
-                          color: Colors.white,
-                          fontSize: 20,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    itemCount: 20,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: GestureDetector(
+                          onTap: () {
+                            model.log.i('Card $index tapped');
+                          },
+                          child: ListTile(
+                            title: Text('1/02/15 - 10.00 am',
+                                style: boldTextStyle.copyWith(
+                                    fontSize: 13, color: mainColor)),
+                            subtitle: Text('Progress $index'),
+                            trailing: Text('Pembangunan $index'),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Total Dana Sosial',
-                            style: regularTextStyle.copyWith(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          ),
-                          Text(
-                            'Rp. 1.000.000',
-                            style: regularTextStyle.copyWith(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
-                const SizedBox(height: 25),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: mainGrey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      itemCount: 20,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: GestureDetector(
-                            onTap: () {
-                              model.log.i('Card $index tapped');
-                            },
-                            child: ListTile(
-                              title: Text('1/02/15 - 10.00 am',
-                                  style: boldTextStyle.copyWith(
-                                      fontSize: 13, color: mainColor)),
-                              subtitle: Text('Progress $index'),
-                              trailing: Text('Pembangunan $index'),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            floatingActionButton: const FloatingActionButton(
-              onPressed: null,
-              child: Icon(Icons.add),
-            ));
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              model.goToTambahDanaSosial();
+            },
+            child: const Icon(Icons.add),
+          ),
+        );
       },
     );
   }

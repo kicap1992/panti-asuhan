@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '../app/app.logger.dart';
+
 class MyHttpServices {
+  final log = getLogger('MyHttpServices');
   final _options = BaseOptions(
     baseUrl: dotenv.env['api_url']!,
     connectTimeout: const Duration(seconds: 60),

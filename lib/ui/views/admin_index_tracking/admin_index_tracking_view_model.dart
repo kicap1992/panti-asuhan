@@ -36,6 +36,12 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
 
   Future<void> init() async {
     setIndex(1);
+    // await 2 seconds to make sure the view is loaded
+    await Future.delayed(const Duration(milliseconds: 500));
+    _navigationService.navigateTo(
+      _views[1],
+      id: 3,
+    );
   }
 
   void handleNavigation(int index) {
