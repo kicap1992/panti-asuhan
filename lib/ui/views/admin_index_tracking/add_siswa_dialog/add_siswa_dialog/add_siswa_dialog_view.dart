@@ -102,16 +102,6 @@ class AddSiswaDialogView extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       MyTextFormField(
-                        labelText: 'NIS',
-                        controller: model.nisController,
-                        keyboardType: TextInputType.number,
-                        validator: Validatorless.multiple([
-                          Validatorless.required('NIS tidak boleh kosong'),
-                          Validatorless.number('NIS harus angka'),
-                        ]),
-                      ),
-                      const SizedBox(height: 10),
-                      MyTextFormField(
                         labelText: 'Nama',
                         controller: model.namaController,
                         validator:
@@ -128,6 +118,14 @@ class AddSiswaDialogView extends StatelessWidget {
                           model.changeDate(context);
                         },
                       ),
+                      const SizedBox(height: 10),
+                      MyTextFormField(
+                        labelText: 'Tempat Lahir',
+                        controller: model.tempatLahirController,
+                        validator: Validatorless.required(
+                            'Tempat lahir tidak boleh kosong'),
+                      ),
+
                       const SizedBox(height: 10),
                       // create dropdown button
                       Container(
@@ -165,6 +163,36 @@ class AddSiswaDialogView extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       MyTextFormField(
+                        labelText: 'No. Telepon',
+                        controller: model.noTelponController,
+                        keyboardType: TextInputType.number,
+                        validator: Validatorless.multiple(
+                          [
+                            Validatorless.required(
+                                'No. telepon tidak boleh kosong'),
+                            Validatorless.number(
+                                'No. telepon harus berupa angka'),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      MyTextFormField(
+                        labelText: 'Agama',
+                        controller: model.agamaController,
+                        keyboardType: TextInputType.emailAddress,
+                        validator:
+                            Validatorless.required('Agama tidak boleh kosong'),
+                      ),
+                      const SizedBox(height: 10),
+                      MyTextFormField(
+                        labelText: 'Kewarganegaraan',
+                        controller: model.kewarganegaraanController,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: Validatorless.required(
+                            'Kewarganegaraan tidak boleh kosong'),
+                      ),
+                      const SizedBox(height: 10),
+                      MyTextFormField(
                         labelText: 'Alamat',
                         controller: model.alamatController,
                         maxLines: 2,
@@ -173,11 +201,40 @@ class AddSiswaDialogView extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       MyTextFormField(
-                        labelText: 'Keahlian',
-                        controller: model.keahlianController,
+                        labelText: 'Pendidikan SD',
+                        controller: model.pendidikanSDController,
+                        validator: Validatorless.required(
+                            'Pendidikan SD tidak boleh kosong'),
+                      ),
+                      const SizedBox(height: 10),
+                      MyTextFormField(
+                        labelText: 'Pendidikan SMP',
+                        controller: model.pendidikanSMPController,
+                        validator: Validatorless.required(
+                            'Pendidikan SMP tidak boleh kosong'),
+                      ),
+                      const SizedBox(height: 10),
+                      MyTextFormField(
+                        labelText: 'Pendidikan SMA',
+                        controller: model.pendidikanSMAController,
+                        validator: Validatorless.required(
+                            'Pendidikan SMA tidak boleh kosong'),
+                      ),
+                      const SizedBox(height: 10),
+                      MyTextFormField(
+                        labelText: 'Kemampuan',
+                        controller: model.kemampuanController,
                         maxLines: 4,
                         validator: Validatorless.required(
-                            'Keahlian tidak boleh kosong'),
+                            'Kemampuan tidak boleh kosong'),
+                      ),
+                      const SizedBox(height: 10),
+                      MyTextFormField(
+                        labelText: "Hobi",
+                        controller: model.hobiController,
+                        maxLines: 4,
+                        validator:
+                            Validatorless.required('Hobi tidak boleh kosong'),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -200,13 +257,13 @@ class AddSiswaDialogView extends StatelessWidget {
                               if (model.formKey.currentState!.validate()) {
                                 bool res = await model.postData();
                                 model.log.i("res: $res");
-                                // if (res) {
-                                //   completer(
-                                //     DialogResponse(
-                                //       confirmed: true,
-                                //     ),
-                                //   );
-                                // }
+                                if (res) {
+                                  completer(
+                                    DialogResponse(
+                                      confirmed: true,
+                                    ),
+                                  );
+                                }
                               }
                             },
                             child: const Text(

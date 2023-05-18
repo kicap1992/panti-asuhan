@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:panti_asuhan/app/app.locator.dart';
-import 'package:panti_asuhan/app/core/custom_base_view_model.dart';
 
+import '../../../../../app/app.locator.dart';
 import '../../../../../app/app.logger.dart';
+import '../../../../../app/core/custom_base_view_model.dart';
 import '../../../../../services/http_services.dart';
 import '../../../../../services/my_easyloading.dart';
 
@@ -28,11 +28,18 @@ class AddSiswaDialogViewModel extends CustomBaseViewModel {
   // form and text controller
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController nisController = TextEditingController();
   TextEditingController namaController = TextEditingController();
   TextEditingController tanggalLahirController = TextEditingController();
+  TextEditingController tempatLahirController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
-  TextEditingController keahlianController = TextEditingController();
+  TextEditingController noTelponController = TextEditingController();
+  TextEditingController agamaController = TextEditingController();
+  TextEditingController kewarganegaraanController = TextEditingController();
+  TextEditingController pendidikanSDController = TextEditingController();
+  TextEditingController pendidikanSMPController = TextEditingController();
+  TextEditingController pendidikanSMAController = TextEditingController();
+  TextEditingController kemampuanController = TextEditingController();
+  TextEditingController hobiController = TextEditingController();
 
   Future<void> init() async {}
 
@@ -79,12 +86,19 @@ class AddSiswaDialogViewModel extends CustomBaseViewModel {
     easyLoading.customLoading('Menambahkan data...');
     try {
       var formData = FormData.fromMap({
-        'nis': nisController.text,
         'nama': namaController.text,
         'jenis_kelamin': jenisKelamin,
         'tanggal_lahir': tanggalLahirController.text,
+        'tempat_lahir': tempatLahirController.text,
         'alamat': alamatController.text,
-        'keahlian': keahlianController.text,
+        'no_telpon': noTelponController.text,
+        'agama': agamaController.text,
+        'kewarganegaraan': kewarganegaraanController.text,
+        'pendidikan_sd': pendidikanSDController.text,
+        'pendidikan_smp': pendidikanSMPController.text,
+        'pendidikan_sma': pendidikanSMAController.text,
+        'kemampuan': kemampuanController.text,
+        'hobi': hobiController.text,
         'foto': await MultipartFile.fromFile(_imagePath!),
       });
 

@@ -88,27 +88,52 @@ class DanaSosialAdminView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    itemCount: 20,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: GestureDetector(
-                          onTap: () {
-                            model.log.i('Card $index tapped');
-                          },
-                          child: ListTile(
-                            title: Text('1/02/15 - 10.00 am',
-                                style: boldTextStyle.copyWith(
-                                    fontSize: 13, color: mainColor)),
-                            subtitle: Text('Progress $index'),
-                            trailing: Text('Pembangunan $index'),
+                  child: (model.danaSosialModelList.isEmpty)
+                      ? Center(
+                          child: Text(
+                            'Tidak ada data',
+                            style: boldTextStyle.copyWith(
+                              fontSize: 20,
+                            ),
                           ),
+                        )
+                      : ListView.builder(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          itemCount: model.danaSosialModelList.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: ListTile(
+                                title: Text(
+                                    model.danaSosialModelList[index].tanggal ??
+                                        '',
+                                    style: boldTextStyle.copyWith(
+                                        fontSize: 13, color: mainColor)),
+                                subtitle: Text(
+                                    'Rp. ${model.danaSosialModelList[index].jumlah}',
+                                    style: regularTextStyle.copyWith(
+                                        fontSize: 13, color: mainColor)),
+                                trailing: Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: mainColor,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      // model.goToTambahDanaSosial();
+                                    },
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
               ),
             ],

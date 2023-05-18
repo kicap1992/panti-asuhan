@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panti_asuhan/services/other_function.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../app/themes/app_colors.dart';
@@ -75,38 +76,45 @@ class DataSiswaView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    itemCount: 20,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: GestureDetector(
-                          onTap: () {
-                            model.log.i('Card $index tapped');
+                  child: (model.siswaModelList.isEmpty)
+                      ? Center(
+                          child: Text(
+                            'Tidak ada data',
+                            style: boldTextStyle.copyWith(
+                              fontSize: 20,
+                            ),
+                          ),
+                        )
+                      : // ListView.builder(
+                      ListView.builder(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          itemCount: model.siswaModelList.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: ListTile(
+                                  title: Text(
+                                      model.siswaModelList[index].nama ?? '',
+                                      style: boldTextStyle.copyWith(
+                                          fontSize: 13, color: mainColor)),
+                                  subtitle: Text(
+                                      'Umur : ${OtherFunction().umur(model.siswaModelList[index].tanggalLahir ?? '')}'),
+                                  // circle avatar
+                                  trailing: Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: mainColor,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: const Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                            );
                           },
-                          child: ListTile(
-                              title: Text('Namanya',
-                                  style: boldTextStyle.copyWith(
-                                      fontSize: 13, color: mainColor)),
-                              subtitle: Text('Umurnya : $index'),
-                              // circle avatar
-                              trailing: Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: mainColor,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: const Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                ),
-                              )),
                         ),
-                      );
-                    },
-                  ),
                 ),
               ),
             ],

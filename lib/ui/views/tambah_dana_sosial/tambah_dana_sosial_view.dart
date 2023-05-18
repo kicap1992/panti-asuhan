@@ -40,89 +40,97 @@ class TambahDanaSosialView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Form(
                 key: model.formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Keterangan",
-                      style: regularTextStyle.copyWith(color: mainColor),
-                    ),
-                    MyTextFormField(
-                      hintText: "Keterangan",
-                      controller: model.ketController,
-                      maxLines: 3,
-                      validator: Validatorless.required(
-                          'Keterangan tidak boleh kosong'),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      "Jumlah (Rp. )",
-                      style: regularTextStyle.copyWith(color: mainColor),
-                    ),
-                    MyTextFormField(
-                      hintText: "Jumlah (Rp. )",
-                      keyboardType: TextInputType.number,
-                      controller: model.jumlahController,
-                      validator: Validatorless.multiple(
-                        [
-                          Validatorless.required('Jumlah tidak boleh kosong'),
-                          Validatorless.number('Jumlah harus angka'),
-                        ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Keterangan",
+                        style: regularTextStyle.copyWith(color: mainColor),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      "Tanggal",
-                      style: regularTextStyle.copyWith(color: mainColor),
-                    ),
-                    MyTextFormField(
-                      hintText: 'Tanggal',
-                      readOnly: true,
-                      validator: Validatorless.required(
-                          'Tanggal lahir tidak boleh kosong'),
-                      onTap: () {
-                        model.changeDate(context);
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      "Jenis Dana",
-                      style: regularTextStyle.copyWith(color: mainColor),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 60,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(
-                          color: mainColor,
+                      MyTextFormField(
+                        hintText: "Keterangan",
+                        controller: model.ketController,
+                        maxLines: 3,
+                        validator: Validatorless.required(
+                            'Keterangan tidak boleh kosong'),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Jumlah (Rp. )",
+                        style: regularTextStyle.copyWith(color: mainColor),
+                      ),
+                      MyTextFormField(
+                        hintText: "Jumlah (Rp. )",
+                        keyboardType: TextInputType.number,
+                        controller: model.jumlahController,
+                        validator: Validatorless.multiple(
+                          [
+                            Validatorless.required('Jumlah tidak boleh kosong'),
+                            Validatorless.number('Jumlah harus angka'),
+                          ],
                         ),
                       ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: model.jenisDana,
-                          onChanged: (String? newValue) {
-                            model.jenisDana = newValue!;
-                          },
-                          items: model.jenisDanaList
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,
-                                  style: const TextStyle(fontSize: 16)),
-                            );
-                          }).toList(),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Tanggal",
+                        style: regularTextStyle.copyWith(color: mainColor),
+                      ),
+                      MyTextFormField(
+                        hintText: 'Tanggal',
+                        readOnly: true,
+                        controller: model.tanggalController,
+                        validator: Validatorless.required(
+                            'Tanggal lahir tidak boleh kosong'),
+                        onTap: () {
+                          model.changeDate(context);
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Jenis Dana",
+                        style: regularTextStyle.copyWith(color: mainColor),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 60,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(
+                            color: mainColor,
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: model.jenisDana,
+                            onChanged: (String? newValue) {
+                              model.jenisDana = newValue!;
+                            },
+                            items: model.jenisDanaList
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                    style: const TextStyle(fontSize: 16)),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    MyButton(
-                      text: "Simpan",
-                      onPressed: () {},
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      MyButton(
+                        text: "Simpan",
+                        onPressed: () {
+                          if (model.formKey.currentState!.validate()) {
+                            model.log.i('Form Valid');
+                            model.addData();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
