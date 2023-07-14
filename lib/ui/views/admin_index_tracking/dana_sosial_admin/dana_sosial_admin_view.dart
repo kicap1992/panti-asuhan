@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panti_asuhan/app/themes/app_colors.dart';
+import 'package:panti_asuhan/services/other_function.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../app/themes/app_text.dart';
@@ -102,6 +103,10 @@ class DanaSosialAdminView extends StatelessWidget {
                               horizontal: 15, vertical: 10),
                           itemCount: model.danaSosialModelList.length,
                           itemBuilder: (context, index) {
+                            String jumlahDonasi = OtherFunction().commaFormat(
+                                int.parse(
+                                    model.danaSosialModelList[index].jumlah ??
+                                        '0'));
                             return Card(
                               child: ListTile(
                                 title: Text(
@@ -109,10 +114,19 @@ class DanaSosialAdminView extends StatelessWidget {
                                         '',
                                     style: boldTextStyle.copyWith(
                                         fontSize: 13, color: mainColor)),
-                                subtitle: Text(
-                                    'Rp. ${model.danaSosialModelList[index].jumlah}',
-                                    style: regularTextStyle.copyWith(
-                                        fontSize: 13, color: mainColor)),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        model.danaSosialModelList[index].nama ??
+                                            '',
+                                        style: regularTextStyle.copyWith(
+                                            fontSize: 13, color: mainColor)),
+                                    Text('Rp. $jumlahDonasi',
+                                        style: regularTextStyle.copyWith(
+                                            fontSize: 13, color: mainColor)),
+                                  ],
+                                ),
                                 trailing: Container(
                                   width: 50,
                                   height: 50,

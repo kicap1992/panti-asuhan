@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:panti_asuhan/services/other_function.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../app/themes/app_colors.dart';
 import '../../../../app/themes/app_text.dart';
+import '../../../../services/other_function.dart';
 import './data_siswa_view_model.dart';
 
 class DataSiswaView extends StatelessWidget {
@@ -100,16 +100,24 @@ class DataSiswaView extends StatelessWidget {
                                   subtitle: Text(
                                       'Umur : ${OtherFunction().umur(model.siswaModelList[index].tanggalLahir ?? '')}'),
                                   // circle avatar
-                                  trailing: Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: mainColor,
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    child: const Icon(
-                                      Icons.person,
-                                      color: Colors.white,
+                                  trailing: GestureDetector(
+                                    onTap: () {
+                                      model.log.i(
+                                          'Edit${model.siswaModelList[index].idSiswa!}');
+                                      model.goToEditSiswa(int.parse(model
+                                          .siswaModelList[index].idSiswa!));
+                                    },
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: mainColor,
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: const Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   )),
                             );

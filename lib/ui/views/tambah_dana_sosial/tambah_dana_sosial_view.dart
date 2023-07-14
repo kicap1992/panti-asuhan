@@ -46,15 +46,15 @@ class TambahDanaSosialView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Keterangan",
+                        "Nama Donator",
                         style: regularTextStyle.copyWith(color: mainColor),
                       ),
                       MyTextFormField(
-                        hintText: "Keterangan",
-                        controller: model.ketController,
-                        maxLines: 3,
+                        hintText: "Nama Donatur",
+                        controller: model.namaController,
+                        maxLines: 1,
                         validator: Validatorless.required(
-                            'Keterangan tidak boleh kosong'),
+                            'Nama Donatur tidak boleh kosong'),
                       ),
                       const SizedBox(height: 20),
                       Text(
@@ -82,46 +82,14 @@ class TambahDanaSosialView extends StatelessWidget {
                         readOnly: true,
                         controller: model.tanggalController,
                         validator: Validatorless.required(
-                            'Tanggal lahir tidak boleh kosong'),
+                            'Tanggal  tidak boleh kosong'),
                         onTap: () {
                           model.changeDate(context);
                         },
                       ),
                       const SizedBox(height: 20),
-                      Text(
-                        "Jenis Dana",
-                        style: regularTextStyle.copyWith(color: mainColor),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 60,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(
-                            color: mainColor,
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: model.jenisDana,
-                            onChanged: (String? newValue) {
-                              model.jenisDana = newValue!;
-                            },
-                            items: model.jenisDanaList
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value,
-                                    style: const TextStyle(fontSize: 16)),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
                       MyButton(
-                        text: "Simpan",
+                        text: "Simpan Data",
                         onPressed: () {
                           if (model.formKey.currentState!.validate()) {
                             model.log.i('Form Valid');

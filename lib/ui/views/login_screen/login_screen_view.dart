@@ -63,6 +63,7 @@ class LoginScreenView extends StatelessWidget {
                     hintText: "Password",
                     prefixIcon: Icon(Icons.lock),
                     // controller: model.passwordController,
+                    obscureText: true,
                   ),
                   const SizedBox(
                     height: 10,

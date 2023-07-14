@@ -18,7 +18,7 @@ class TambahDanaSosialViewModel extends CustomBaseViewModel {
 
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController ketController = TextEditingController();
+  TextEditingController namaController = TextEditingController();
   TextEditingController jumlahController = TextEditingController();
   TextEditingController tanggalController = TextEditingController();
 
@@ -44,8 +44,7 @@ class TambahDanaSosialViewModel extends CustomBaseViewModel {
     easyLoading.customLoading('Menambahkan data...');
     try {
       var formData = FormData.fromMap({
-        'jenis': jenisDana,
-        'keterangan': ketController.text,
+        'nama': namaController.text,
         'jumlah': jumlahController.text,
         'tanggal': tanggalController.text,
       });

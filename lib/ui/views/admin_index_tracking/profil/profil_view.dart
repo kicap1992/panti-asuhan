@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../../app/themes/app_text.dart';
 import './profil_view_model.dart';
 
 class ProfilView extends StatelessWidget {
@@ -18,10 +19,57 @@ class ProfilView extends StatelessWidget {
         ProfilViewModel model,
         Widget? child,
       ) {
-        return const Scaffold(
-          body: Center(
-            child: Text(
-              'ProfilView',
+        return Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            child: Column(
+              children: [
+                const Center(
+                  child: Image(
+                    image: AssetImage("assets/logo.png"),
+                    width: 200,
+                    height: 200,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "PANTI ASUHAN ABADI AISYIYAH",
+                  style: boldTextStyle.copyWith(
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.phone),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Text(
+                        "081 343 434 343",
+                        textAlign: TextAlign.justify,
+                        style: regularTextStyle,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.location_on),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Text(
+                        "Jln Panti Asuhan No. 3 Ujung Lare, Kec. Soreang, Kota Parepare, Sulawesi Selatan 91133",
+                        textAlign: TextAlign.justify,
+                        style: regularTextStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         );

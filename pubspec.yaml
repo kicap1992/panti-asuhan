@@ -49,6 +49,7 @@ dependencies:
   # calendar_date_picker2: ^0.5.2
   flutter_holo_date_picker: ^1.1.0
   validatorless: ^1.2.3
+  intl:
 
 dev_dependencies:
   flutter_test:

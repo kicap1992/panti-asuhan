@@ -16,12 +16,19 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
       'icon': Icons.people_alt_outlined,
       'header': 'List Siswa'
     },
-    {'name': 'Dana Sosial', 'icon': Icons.money, 'header': 'Dana Sosial'},
+    {'name': 'Dana', 'icon': Icons.money, 'header': 'Dana Sosial'},
     {
       'name': 'Profil',
-      'icon': Icons.list_alt_rounded,
+      'icon': Icons.person_4_outlined,
       'header': 'Profil Panti Asuhan'
-    }
+    },
+    {'name': 'V & M', 'icon': Icons.list_alt_rounded, 'header': 'Visi & Misi'},
+    {'name': 'Sejarah', 'icon': Icons.list_outlined, 'header': 'Sejarah'},
+    {
+      'name': 'S O',
+      'icon': Icons.people_alt_outlined,
+      'header': 'Struktur Organisasi'
+    },
   ];
 
   List<Map<String, dynamic>> get bottomNavBarList => _bottomNavBarList;
@@ -30,6 +37,9 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
     AdminIndexTrackingViewRoutes.dataSiswaView,
     AdminIndexTrackingViewRoutes.danaSosialAdminView,
     AdminIndexTrackingViewRoutes.profilView,
+    AdminIndexTrackingViewRoutes.visiMisiView,
+    AdminIndexTrackingViewRoutes.sejarahView,
+    AdminIndexTrackingViewRoutes.strukturOrganisasiView
   ];
 
   String header = 'Dana Sosial';

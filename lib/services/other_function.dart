@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class OtherFunction {
   int umur(String tanggalLahir) {
     // change tanggalLahir to DateTime
@@ -7,5 +9,10 @@ class OtherFunction {
     // get difference in year
     int year = now.year - date.year;
     return year;
+  }
+
+  String commaFormat(int number) {
+    final formatter = NumberFormat('#,###');
+    return formatter.format(number);
   }
 }

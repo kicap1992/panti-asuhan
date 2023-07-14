@@ -18,6 +18,8 @@ class MyTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.keyboardType = TextInputType.text,
+    this.initialValue,
+    this.enabled = true,
   }) : super(key: key);
 
   final String? labelText;
@@ -33,10 +35,14 @@ class MyTextFormField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final TextInputType keyboardType;
+  final String? initialValue;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
+      initialValue: initialValue,
       onEditingComplete: onEditingComplete,
       maxLines: maxLines,
       controller: controller,

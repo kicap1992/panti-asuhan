@@ -1,3 +1,5 @@
+import 'package:panti_asuhan/ui/views/admin_index_tracking/edit_siswa/edit_siswa_view.dart';
+
 import '../../../../app/app.dialogs.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.logger.dart';
@@ -39,8 +41,8 @@ class DataSiswaViewModel extends CustomBaseViewModel {
       log.i(siswaModelList);
     } catch (e) {
       log.e(e);
-      setBusy(false);
     } finally {
+      setBusy(false);
       easyLoading.dismissLoading();
     }
   }
@@ -54,5 +56,9 @@ class DataSiswaViewModel extends CustomBaseViewModel {
     if (res?.confirmed != true) return;
     siswaModelList = [];
     await getData();
+  }
+
+  goToEditSiswa(int idSiswa) async {
+    navigationService.navigateToView(EditSiswaView(idSiswa: idSiswa));
   }
 }

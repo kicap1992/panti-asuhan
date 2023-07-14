@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ffmpeg -i "rtsp://admin:admin123@192.168.2.109/cam/realmonitor?channel=1&subtype=1" -acodec copy -vcodec copy abcd.mp4 -y
