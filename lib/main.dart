@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Perumahan Mutiara Alga',
+      title: 'Panti Asuhan Aisyiyah Abadi',
       theme: appTheme,
       debugShowCheckedModeBanner: false,
       navigatorKey: StackedService.navigatorKey,
