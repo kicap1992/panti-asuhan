@@ -58,18 +58,68 @@ class TambahDanaSosialView extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        "Jumlah (Rp. )",
+                        "Jenis Donasi",
                         style: regularTextStyle.copyWith(color: mainColor),
                       ),
-                      MyTextFormField(
-                        hintText: "Jumlah (Rp. )",
-                        keyboardType: TextInputType.number,
-                        controller: model.jumlahController,
-                        validator: Validatorless.multiple(
-                          [
-                            Validatorless.required('Jumlah tidak boleh kosong'),
-                            Validatorless.number('Jumlah harus angka'),
-                          ],
+                      Container(
+                        width: double.infinity,
+                        height: 60,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(
+                            color: mainColor,
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: model.jenisDonasi,
+                            onChanged: (String? newValue) {
+                              // model.setSelectedjenisDonasi(newValue!);
+                              model.log.i(newValue);
+                              model.jenisDonasi = newValue!;
+                              model.notifyListeners();
+                            },
+                            items: model.jenisDonasiList.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: regularTextStyle.copyWith(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.jenisDonasi == 'Uang',
+                        child: const SizedBox(height: 20),
+                      ),
+                      Visibility(
+                        visible: model.jenisDonasi == 'Uang',
+                        child: Text(
+                          "Jumlah (Rp. )",
+                          style: regularTextStyle.copyWith(color: mainColor),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.jenisDonasi == 'Uang',
+                        child: MyTextFormField(
+                          hintText: "Jumlah (Rp. ) Donasi",
+                          keyboardType: TextInputType.number,
+                          controller: model.jumlahController,
+                          validator: model.jenisDonasi == 'Uang'
+                              ? Validatorless.multiple(
+                                  [
+                                    Validatorless.required(
+                                        'Jumlah tidak boleh kosong'),
+                                    Validatorless.number('Jumlah harus angka'),
+                                  ],
+                                )
+                              : null,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -78,7 +128,7 @@ class TambahDanaSosialView extends StatelessWidget {
                         style: regularTextStyle.copyWith(color: mainColor),
                       ),
                       MyTextFormField(
-                        hintText: 'Tanggal',
+                        hintText: ' Pilih Tanggal',
                         readOnly: true,
                         controller: model.tanggalController,
                         validator: Validatorless.required(
@@ -86,6 +136,30 @@ class TambahDanaSosialView extends StatelessWidget {
                         onTap: () {
                           model.changeDate(context);
                         },
+                      ),
+                      const SizedBox(height: 20),
+                      Visibility(
+                        visible: model.jenisDonasi == 'Barang',
+                        child: Text(
+                          "Keterangan",
+                          style: regularTextStyle.copyWith(color: mainColor),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.jenisDonasi == 'Barang',
+                        child: MyTextFormField(
+                          hintText: 'Masukkan Keterangan',
+                          maxLines: 3,
+                          controller: model.keteranganController,
+                          validator: model.jenisDonasi == 'Barang'
+                              ? Validatorless.multiple(
+                                  [
+                                    Validatorless.required(
+                                        'Keterangan tidak boleh kosong'),
+                                  ],
+                                )
+                              : null,
+                        ),
                       ),
                       const SizedBox(height: 20),
                       MyButton(

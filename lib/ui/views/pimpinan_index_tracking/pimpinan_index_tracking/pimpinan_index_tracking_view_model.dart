@@ -3,15 +3,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../../app/app.locator.dart';
-import '../../../app/app.logger.dart';
-import '../../../app/app.router.dart';
+import '../../../../app/app.locator.dart';
+import '../../../../app/app.logger.dart';
+import '../../../../app/app.router.dart';
 
-class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
-  final log = getLogger('AdminIndexTrackingViewModel');
+class PimpinanIndexTrackingViewModel extends IndexTrackingViewModel {
+  final log = getLogger('PimpinanIndexTrackingViewModel');
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
+
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  String header = 'Dana Sosial';
 
   final _bottomNavBarList = [
     {
@@ -25,36 +28,26 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
       'icon': Icons.person_4_outlined,
       'header': 'Profil Panti Asuhan'
     },
-    {'name': 'V & M', 'icon': Icons.list_alt_rounded, 'header': 'Visi & Misi'},
-    {'name': 'Sejarah', 'icon': Icons.list_outlined, 'header': 'Sejarah'},
-    {
-      'name': 'S O',
-      'icon': Icons.people_alt_outlined,
-      'header': 'Struktur Organisasi'
-    },
   ];
 
   List<Map<String, dynamic>> get bottomNavBarList => _bottomNavBarList;
-
   final List<String> _views = [
-    AdminIndexTrackingViewRoutes.dataSiswaView,
-    AdminIndexTrackingViewRoutes.danaSosialAdminView,
-    AdminIndexTrackingViewRoutes.profilView,
-    AdminIndexTrackingViewRoutes.visiMisiView,
-    AdminIndexTrackingViewRoutes.sejarahView,
-    AdminIndexTrackingViewRoutes.strukturOrganisasiView
+    PimpinanIndexTrackingViewRoutes.dataSiswaView,
+    PimpinanIndexTrackingViewRoutes.danaSosialAdminView,
+    PimpinanIndexTrackingViewRoutes.profilView,
   ];
-
-  String header = 'Dana Sosial';
-
   Future<void> init() async {
-    setIndex(1);
-    // await 2 seconds to make sure the view is loaded
-    // await Future.delayed(const Duration(milliseconds: 500));
-    // _navigationService.navigateTo(
-    //   _views[1],
-    //   id: 3,
-    // );
+    _prefs.then((SharedPreferences prefs) {
+      if (prefs.getString('role') == 'pimpinan') {
+        setIndex(1);
+        // // await 2 seconds to make sure the view is loaded
+        // Future.delayed(const Duration(milliseconds: 500));
+      } else {
+        prefs.setBool('isLogin', false);
+        prefs.remove('role');
+        _navigationService.clearStackAndShow(Routes.loginScreenView);
+      }
+    });
   }
 
   void handleNavigation(int index) {
@@ -67,7 +60,7 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
     header = _bottomNavBarList[index]['header'] as String;
     _navigationService.navigateTo(
       _views[index],
-      id: 3,
+      id: 4,
     );
   }
 

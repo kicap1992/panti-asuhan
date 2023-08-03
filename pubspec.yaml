@@ -50,6 +50,7 @@ dependencies:
   flutter_holo_date_picker: ^1.1.0
   validatorless: ^1.2.3
   intl:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter:
   assets:
     - .env
     - assets/logo.png
+    - assets/qrcode.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

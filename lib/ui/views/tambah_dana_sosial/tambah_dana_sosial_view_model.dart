@@ -13,14 +13,15 @@ class TambahDanaSosialViewModel extends CustomBaseViewModel {
   final _httpService = locator<MyHttpServices>();
   final easyLoading = locator<MyEasyLoading>();
 
-  String jenisDana = 'Pemasukan';
-  List<String> jenisDanaList = ['Pemasukan', 'Pengeluaran'];
+  String jenisDonasi = 'Uang';
+  List<String> jenisDonasiList = ['Uang', 'Barang'];
 
   final formKey = GlobalKey<FormState>();
 
   TextEditingController namaController = TextEditingController();
   TextEditingController jumlahController = TextEditingController();
   TextEditingController tanggalController = TextEditingController();
+  TextEditingController keteranganController = TextEditingController();
 
   Future<void> init() async {}
 
@@ -47,6 +48,8 @@ class TambahDanaSosialViewModel extends CustomBaseViewModel {
         'nama': namaController.text,
         'jumlah': jumlahController.text,
         'tanggal': tanggalController.text,
+        'ket': keteranganController.text,
+        'jenis': jenisDonasi,
       });
       var response =
           await _httpService.postWithFormData('dana_sosial', formData);

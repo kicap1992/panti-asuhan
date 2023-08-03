@@ -4,11 +4,13 @@ import 'package:stacked/stacked.dart';
 import './struktur_organisasi_view_model.dart';
 
 class StrukturOrganisasiView extends StatelessWidget {
+  const StrukturOrganisasiView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<StrukturOrganisasiViewModel>.nonReactive(
       viewModelBuilder: () => StrukturOrganisasiViewModel(),
-      onModelReady: (StrukturOrganisasiViewModel model) async {
+      onViewModelReady: (StrukturOrganisasiViewModel model) async {
         await model.init();
       },
       builder: (
@@ -43,7 +45,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    model.Ketua,
+                    model.ketua,
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -62,7 +64,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    model.Sekretaris,
+                    model.sekretaris,
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -81,7 +83,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    model.Bendahara,
+                    model.bendahara,
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -100,7 +102,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    '${model.SeksiPengasuh1}\n${model.SeksiPengasuh2}\n${model.SeksiPengasuh3}\n${model.SeksiPengasuh4}',
+                    '${model.seksiPengasuh1}\n${model.seksiPengasuh2}\n${model.seksiPengasuh3}\n${model.seksiPengasuh4}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -119,7 +121,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    '${model.SeksiIbadah1}\n${model.SeksiIbadah2}\n${model.SeksiIbadah3}\n${model.SeksiIbadah4}',
+                    '${model.seksiIbadah1}\n${model.seksiIbadah2}\n${model.seksiIbadah3}\n${model.seksiIbadah4}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -138,7 +140,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    '${model.SeksiPendidikan1}\n${model.SeksiPendidikan2}',
+                    '${model.seksiPendidikan1}\n${model.seksiPendidikan2}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -157,7 +159,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    model.SeksiKesehatan,
+                    model.seksiKesehatan,
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -176,7 +178,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    model.SeksiKebersihan,
+                    model.seksiKebersihan,
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -192,7 +194,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    model.SeksiKeterampilan1,
+                    model.seksiKeterampilan1,
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -208,7 +210,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    model.SeksiSaranaPrasarana1,
+                    model.seksiSaranaPrasarana1,
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -224,7 +226,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${model.SeksiKonsumsi1}\n${model.SeksiKonsumsi2}',
+                    '${model.seksiKonsumsi1}\n${model.seksiKonsumsi2}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -240,7 +242,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${model.SeksiKeamanan1}\n${model.SeksiKeamanan2}',
+                    '${model.seksiKeamanan1}\n${model.seksiKeamanan2}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -256,7 +258,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${model.SeksiGedung1}\n${model.SeksiGedung2}\n${model.SeksiGedung3}\n${model.SeksiGedung4}',
+                    '${model.seksiGedung1}\n${model.seksiGedung2}\n${model.seksiGedung3}\n${model.seksiGedung4}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -272,7 +274,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${model.SeksiWisma1}\n${model.SeksiWisma2}\n${model.SeksiWisma3}\n${model.SeksiWisma4}\n${model.SeksiWisma5}',
+                    '${model.seksiWisma1}\n${model.seksiWisma2}\n${model.seksiWisma3}\n${model.seksiWisma4}\n${model.seksiWisma5}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -288,7 +290,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${model.KelompokPutri1}\n${model.KelompokPutri2}\n${model.KelompokPutri3}',
+                    '${model.kelompokPutri1}\n${model.kelompokPutri2}\n${model.kelompokPutri3}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -304,7 +306,7 @@ class StrukturOrganisasiView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${model.KelompokPutra1}\n${model.KelompokPutra2}\n${model.KelompokPutra3}',
+                    '${model.kelompokPutra1}\n${model.kelompokPutra2}\n${model.kelompokPutra3}',
                     style: const TextStyle(
                       fontSize: 20,
                     ),

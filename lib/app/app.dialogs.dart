@@ -8,9 +8,11 @@ import 'package:stacked_services/stacked_services.dart';
 
 import 'app.locator.dart';
 import '../ui/views/admin_index_tracking/add_siswa_dialog/add_siswa_dialog/add_siswa_dialog_view.dart';
+import '../ui/views/admin_index_tracking/filter_dialog/filter_dialog_view.dart';
 
 enum DialogType {
   addSiswaDialogView,
+  filterDialogView,
 }
 
 void setupDialogUi() {
@@ -19,6 +21,8 @@ void setupDialogUi() {
   final Map<DialogType, DialogBuilder> builders = {
     DialogType.addSiswaDialogView: (context, request, completer) =>
         AddSiswaDialogView(request: request, completer: completer),
+    DialogType.filterDialogView: (context, request, completer) =>
+        FilterDialogView(request: request, completer: completer),
   };
 
   dialogService.registerCustomDialogBuilders(builders);

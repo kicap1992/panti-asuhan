@@ -4,24 +4,24 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-import '../../../app/app.router.dart';
-import '../../../app/themes/app_colors.dart';
-import '../../../app/themes/app_text.dart';
-import './admin_index_tracking_view_model.dart';
+import '../../../../app/app.router.dart';
+import '../../../../app/themes/app_colors.dart';
+import '../../../../app/themes/app_text.dart';
+import './pimpinan_index_tracking_view_model.dart';
 
-class AdminIndexTrackingView extends StatelessWidget {
-  const AdminIndexTrackingView({super.key});
+class PimpinanIndexTrackingView extends StatelessWidget {
+  const PimpinanIndexTrackingView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AdminIndexTrackingViewModel>.reactive(
-      viewModelBuilder: () => AdminIndexTrackingViewModel(),
-      onViewModelReady: (AdminIndexTrackingViewModel model) async {
+    return ViewModelBuilder<PimpinanIndexTrackingViewModel>.reactive(
+      viewModelBuilder: () => PimpinanIndexTrackingViewModel(),
+      onViewModelReady: (PimpinanIndexTrackingViewModel model) async {
         await model.init();
       },
       builder: (
         BuildContext context,
-        AdminIndexTrackingViewModel model,
+        PimpinanIndexTrackingViewModel model,
         Widget? child,
       ) {
         return Scaffold(
@@ -39,18 +39,22 @@ class AdminIndexTrackingView extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
+                  // model.navigationService.navigateTo(Routes.loginScreenView);
                   model.logout();
                 },
-                icon: const Icon(Icons.logout, color: Colors.white),
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: ExtendedNavigator(
-              navigatorKey: StackedService.nestedNavigationKey(3),
-              router: AdminIndexTrackingViewRouter(),
-              initialRoute: AdminIndexTrackingViewRoutes.danaSosialAdminView,
+              navigatorKey: StackedService.nestedNavigationKey(4),
+              router: PimpinanIndexTrackingViewRouter(),
+              initialRoute: PimpinanIndexTrackingViewRoutes.danaSosialAdminView,
             ),
           ),
           bottomNavigationBar: StylishBottomBar(

@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:panti_asuhan/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-import '../../../app/app.router.dart';
 import '../../../app/themes/app_colors.dart';
 import '../../../app/themes/app_text.dart';
-import './admin_index_tracking_view_model.dart';
+import './user_index_tracking_view_model.dart';
 
-class AdminIndexTrackingView extends StatelessWidget {
-  const AdminIndexTrackingView({super.key});
+class UserIndexTrackingView extends StatelessWidget {
+  const UserIndexTrackingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AdminIndexTrackingViewModel>.reactive(
-      viewModelBuilder: () => AdminIndexTrackingViewModel(),
-      onViewModelReady: (AdminIndexTrackingViewModel model) async {
+    return ViewModelBuilder<UserIndexTrackingViewModel>.reactive(
+      viewModelBuilder: () => UserIndexTrackingViewModel(),
+      onViewModelReady: (UserIndexTrackingViewModel model) async {
         await model.init();
       },
       builder: (
         BuildContext context,
-        AdminIndexTrackingViewModel model,
+        UserIndexTrackingViewModel model,
         Widget? child,
       ) {
         return Scaffold(
@@ -39,18 +39,18 @@ class AdminIndexTrackingView extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  model.logout();
+                  model.login();
                 },
-                icon: const Icon(Icons.logout, color: Colors.white),
+                icon: const Icon(Icons.login, color: Colors.white),
               ),
             ],
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: ExtendedNavigator(
-              navigatorKey: StackedService.nestedNavigationKey(3),
-              router: AdminIndexTrackingViewRouter(),
-              initialRoute: AdminIndexTrackingViewRoutes.danaSosialAdminView,
+              navigatorKey: StackedService.nestedNavigationKey(5),
+              router: UserIndexTrackingViewRouter(),
+              initialRoute: UserIndexTrackingViewRoutes.danaSosialAdminView,
             ),
           ),
           bottomNavigationBar: StylishBottomBar(

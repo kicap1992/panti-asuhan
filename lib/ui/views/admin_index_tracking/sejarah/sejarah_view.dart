@@ -4,11 +4,13 @@ import 'package:stacked/stacked.dart';
 import './sejarah_view_model.dart';
 
 class SejarahView extends StatelessWidget {
+  const SejarahView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SejarahViewModel>.nonReactive(
       viewModelBuilder: () => SejarahViewModel(),
-      onModelReady: (SejarahViewModel model) async {
+      onViewModelReady: (SejarahViewModel model) async {
         await model.init();
       },
       builder: (
@@ -29,9 +31,9 @@ class SejarahView extends StatelessWidget {
                       height: 150,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
-                    model.isi1 + '\n\n' + model.isi2,
+                    '${model.isi1}\n\n${model.isi2}',
                     style: const TextStyle(fontSize: 18),
                     textAlign: TextAlign.justify,
                   ),

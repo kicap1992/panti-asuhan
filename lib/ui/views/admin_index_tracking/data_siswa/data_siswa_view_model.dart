@@ -1,4 +1,5 @@
 import 'package:panti_asuhan/ui/views/admin_index_tracking/edit_siswa/edit_siswa_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../app/app.dialogs.dart';
 import '../../../../app/app.locator.dart';
@@ -16,8 +17,13 @@ class DataSiswaViewModel extends CustomBaseViewModel {
 
   List<SiswaModel> siswaModelList = [];
 
+  String? role;
+
   Future<void> init() async {
     await getData();
+    prefs.then((SharedPreferences prefs) {
+      role = prefs.getString('role');
+    });
   }
 
   getData() async {

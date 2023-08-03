@@ -127,12 +127,14 @@ class DataSiswaView extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              model.addSiswa();
-            },
-            child: const Icon(Icons.add),
-          ),
+          floatingActionButton: model.role == 'admin'
+              ? FloatingActionButton(
+                  onPressed: () {
+                    model.addSiswa();
+                  },
+                  child: const Icon(Icons.add),
+                )
+              : null,
         );
       },
     );

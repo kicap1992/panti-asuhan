@@ -15,4 +15,35 @@ class OtherFunction {
     final formatter = NumberFormat('#,###');
     return formatter.format(number);
   }
+
+  String changeMonth(String month) {
+    switch (month) {
+      case 'Januari':
+        return '01';
+      case 'Februari':
+        return '02';
+      case 'Maret':
+        return '03';
+      case 'April':
+        return '04';
+      case 'Mei':
+        return '05';
+      case 'Juni':
+        return '06';
+      case 'Juli':
+        return '07';
+      case 'Agustus':
+        return '08';
+      case 'September':
+        return '09';
+      case 'Oktober':
+        return '10';
+      case 'November':
+        return '11';
+      case 'Desember':
+        return '12';
+      default:
+        return '';
+    }
+  }
 }

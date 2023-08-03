@@ -4,11 +4,13 @@ import 'package:stacked/stacked.dart';
 import './visi_misi_view_model.dart';
 
 class VisiMisiView extends StatelessWidget {
+  const VisiMisiView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<VisiMisiViewModel>.nonReactive(
       viewModelBuilder: () => VisiMisiViewModel(),
-      onModelReady: (VisiMisiViewModel model) async {
+      onViewModelReady: (VisiMisiViewModel model) async {
         await model.init();
       },
       builder: (
@@ -29,36 +31,28 @@ class VisiMisiView extends StatelessWidget {
                       height: 150,
                     ),
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       'Visi',
-                      style: const TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     model.visi,
                     style: const TextStyle(fontSize: 18),
                     textAlign: TextAlign.justify,
                   ),
-                  SizedBox(height: 30),
-                  Center(
+                  const SizedBox(height: 30),
+                  const Center(
                     child: Text(
                       'Misi',
-                      style: const TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    model.misi1 +
-                        '\n\n' +
-                        model.misi2 +
-                        '\n\n' +
-                        model.misi3 +
-                        '\n\n' +
-                        model.misi4 +
-                        '\n\n' +
-                        model.misi5,
+                    '${model.misi1}\n\n${model.misi2}\n\n${model.misi3}\n\n${model.misi4}\n\n${model.misi5}',
                     style: const TextStyle(fontSize: 18),
                     textAlign: TextAlign.justify,
                   ),
