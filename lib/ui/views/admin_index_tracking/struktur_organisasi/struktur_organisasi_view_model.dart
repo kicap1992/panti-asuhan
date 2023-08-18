@@ -1,6 +1,11 @@
 import 'package:panti_asuhan/app/core/custom_base_view_model.dart';
 
+import '../../../../app/app.dialogs.dart';
+import '../../../../app/app.logger.dart';
+
 class StrukturOrganisasiViewModel extends CustomBaseViewModel {
+  final log = getLogger('StrukturOrganisasiViewModel');
+
   String ketua = "Dr. Andi Fitriani D, S.Ag, M.Pd";
   String sekretaris = "Fitriana Buyanus, S.Si ., M.Kes";
   String bendahara = "Hj. Djaliah, A.Ma";
@@ -51,4 +56,16 @@ class StrukturOrganisasiViewModel extends CustomBaseViewModel {
   String kelompokPutra3 = "Amin Rais";
 
   Future<void> init() async {}
+
+  void editData(String jabatan, bool bool) {
+    var res = dialogService.showCustomDialog(
+      variant: DialogType.editStrukrurOrganisasiDialogView,
+      data: {
+        "jabatan": jabatan,
+        'tambahan': bool,
+      },
+    );
+
+    res;
+  }
 }

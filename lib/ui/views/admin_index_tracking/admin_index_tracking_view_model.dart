@@ -71,7 +71,7 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
     );
   }
 
-  logout() {
+  logout(BuildContext context) {
     _dialogService
         .showConfirmationDialog(
       title: 'Logout',
@@ -82,13 +82,18 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
     )
         .then((value) {
       if (!value!.confirmed) {
+        log.d('logout');
         _prefs.then((SharedPreferences prefs) {
           prefs.setBool('isLogin', false);
           prefs.remove('role');
           _navigationService.clearStackAndShow(Routes.loginScreenView);
         });
       } else {
-        _navigationService.back();
+        // _navigationService.back();
+        // close dialog
+        Navigator.pop(context);
+        // Navigator.of(StackedService.navigatorKey! as BuildContext).pop();
+        // log.d('cancel logout');
       }
     });
   }

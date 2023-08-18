@@ -2,6 +2,7 @@ import 'package:panti_asuhan/ui/views/admin_index_tracking/dana_sosial_admin/dan
 import 'package:panti_asuhan/ui/views/admin_index_tracking/data_siswa/data_siswa_view.dart';
 import 'package:panti_asuhan/ui/views/admin_index_tracking/edit_siswa/edit_siswa_view.dart';
 import 'package:panti_asuhan/ui/views/admin_index_tracking/profil/profil_view.dart';
+import 'package:panti_asuhan/ui/views/admin_index_tracking/struktur_organisasi/edit_strukrur_organisasi_dialog/edit_strukrur_organisasi_dialog_view.dart';
 import 'package:panti_asuhan/ui/views/detail_dana_sosial/detail_dana_sosial_view.dart';
 import 'package:panti_asuhan/ui/views/pimpinan_index_tracking/pimpinan_index_tracking/pimpinan_index_tracking_view.dart';
 import 'package:panti_asuhan/ui/views/tambah_dana_sosial/tambah_dana_sosial_view.dart';
@@ -64,6 +65,7 @@ import '../ui/views/user_index_tracking/user_index_tracking_view.dart';
   dialogs: [
     StackedDialog(classType: AddSiswaDialogView),
     StackedDialog(classType: FilterDialogView),
+    StackedDialog(classType: EditStrukrurOrganisasiDialogView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

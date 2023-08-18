@@ -8,7 +8,7 @@ class StrukturOrganisasiView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<StrukturOrganisasiViewModel>.nonReactive(
+    return ViewModelBuilder<StrukturOrganisasiViewModel>.reactive(
       viewModelBuilder: () => StrukturOrganisasiViewModel(),
       onViewModelReady: (StrukturOrganisasiViewModel model) async {
         await model.init();
@@ -34,60 +34,15 @@ class StrukturOrganisasiView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Ketua",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    model.ketua,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
+                  const KetuaWidget(),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Sekretaris",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    model.sekretaris,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
+                  const SekretarisWidget(),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Bendahara",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    model.bendahara,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
+                  const BendaharaWidget(),
                   const SizedBox(
                     height: 20,
                   ),
@@ -317,6 +272,150 @@ class StrukturOrganisasiView extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class BendaharaWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
+  const BendaharaWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, StrukturOrganisasiViewModel viewModel) {
+    return Card(
+      elevation: 4,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                "Bendahara",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  // model.editSekretaris();
+                },
+                icon: const Icon(Icons.edit),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Text(
+            viewModel.bendahara,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SekretarisWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
+  const SekretarisWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, StrukturOrganisasiViewModel viewModel) {
+    return Card(
+      elevation: 4,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                "Sekretaris",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              IconButton(
+                onPressed: () {
+                  // model.editSekretaris();
+                },
+                icon: const Icon(Icons.edit),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Text(
+            viewModel.sekretaris,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class KetuaWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
+  const KetuaWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, StrukturOrganisasiViewModel viewModel) {
+    return Card(
+      elevation: 4,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                "Ketua",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              IconButton(
+                onPressed: () {
+                  viewModel.editData('ketua', false);
+                },
+                icon: const Icon(Icons.edit),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Text(
+            viewModel.ketua,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

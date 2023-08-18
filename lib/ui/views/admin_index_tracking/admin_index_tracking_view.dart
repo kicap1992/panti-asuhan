@@ -24,69 +24,74 @@ class AdminIndexTrackingView extends StatelessWidget {
         AdminIndexTrackingViewModel model,
         Widget? child,
       ) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              model.header,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            ),
-            backgroundColor: mainColor,
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            actions: [
-              IconButton(
-                onPressed: () {
-                  model.logout();
-                },
-                icon: const Icon(Icons.logout, color: Colors.white),
-              ),
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: ExtendedNavigator(
-              navigatorKey: StackedService.nestedNavigationKey(3),
-              router: AdminIndexTrackingViewRouter(),
-              initialRoute: AdminIndexTrackingViewRoutes.danaSosialAdminView,
-            ),
-          ),
-          bottomNavigationBar: StylishBottomBar(
-            items: [
-              for (var item in model.bottomNavBarList)
-                BottomBarItem(
-                  icon: Icon(item['icon'],
-                      color: model.currentIndex ==
-                              model.bottomNavBarList.indexOf(item)
-                          ? sixthGrey
-                          : backgroundColor),
-                  title: Text(
-                    item['name'],
-                    style: regularTextStyle.copyWith(
-                      color: model.currentIndex ==
-                              model.bottomNavBarList.indexOf(item)
-                          ? sixthGrey
-                          : Colors.grey,
-                    ),
-                  ),
-                  backgroundColor:
-                      model.currentIndex == model.bottomNavBarList.indexOf(item)
-                          ? Colors.white
-                          : Colors.grey,
+        return WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                model.header,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
                 ),
-            ],
-            currentIndex: model.currentIndex,
-            hasNotch: true,
-            backgroundColor: mainColor,
-            onTap: (value) {
-              model.handleNavigation(value);
-            },
-            option: BubbleBarOptions(
-                barStyle: BubbleBarStyle.horizotnal,
-                bubbleFillStyle: BubbleFillStyle.fill,
-                opacity: 0.3),
+              ),
+              backgroundColor: mainColor,
+              elevation: 0,
+              automaticallyImplyLeading: false,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    model.logout(context);
+                  },
+                  icon: const Icon(Icons.logout, color: Colors.white),
+                ),
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: ExtendedNavigator(
+                navigatorKey: StackedService.nestedNavigationKey(3),
+                router: AdminIndexTrackingViewRouter(),
+                initialRoute: AdminIndexTrackingViewRoutes.danaSosialAdminView,
+              ),
+            ),
+            bottomNavigationBar: StylishBottomBar(
+              items: [
+                for (var item in model.bottomNavBarList)
+                  BottomBarItem(
+                    icon: Icon(item['icon'],
+                        color: model.currentIndex ==
+                                model.bottomNavBarList.indexOf(item)
+                            ? sixthGrey
+                            : backgroundColor),
+                    title: Text(
+                      item['name'],
+                      style: regularTextStyle.copyWith(
+                        color: model.currentIndex ==
+                                model.bottomNavBarList.indexOf(item)
+                            ? sixthGrey
+                            : Colors.grey,
+                      ),
+                    ),
+                    backgroundColor: model.currentIndex ==
+                            model.bottomNavBarList.indexOf(item)
+                        ? Colors.white
+                        : Colors.grey,
+                  ),
+              ],
+              currentIndex: model.currentIndex,
+              hasNotch: true,
+              backgroundColor: mainColor,
+              onTap: (value) {
+                model.handleNavigation(value);
+              },
+              option: BubbleBarOptions(
+                  barStyle: BubbleBarStyle.horizotnal,
+                  bubbleFillStyle: BubbleFillStyle.fill,
+                  opacity: 0.3),
+            ),
           ),
         );
       },
