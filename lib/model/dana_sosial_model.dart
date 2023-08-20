@@ -1,5 +1,6 @@
 class DanaSosialModel {
   String? idDanaSosial;
+  String? bentuk;
   String? nama;
   String? jumlah;
   String? tanggal;
@@ -12,6 +13,7 @@ class DanaSosialModel {
 
   DanaSosialModel(
       {this.idDanaSosial,
+      this.bentuk,
       this.nama,
       this.jumlah,
       this.tanggal,
@@ -23,6 +25,7 @@ class DanaSosialModel {
 
   DanaSosialModel.fromJson(Map<String, dynamic> json) {
     idDanaSosial = json['id_dana_sosial'];
+    bentuk = json['bentuk'];
     nama = json['nama'];
     jumlah = json['jumlah'];
     tanggal = json['tanggal'];
@@ -37,6 +40,7 @@ class DanaSosialModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id_dana_sosial'] = idDanaSosial;
+    data['bentuk'] = bentuk;
     data['nama'] = nama;
     data['jumlah'] = jumlah;
     data['tanggal'] = tanggal;

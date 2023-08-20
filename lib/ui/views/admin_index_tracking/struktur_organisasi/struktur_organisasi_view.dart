@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stacked/stacked.dart';
 
 import './struktur_organisasi_view_model.dart';
@@ -34,237 +35,130 @@ class StrukturOrganisasiView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const KetuaWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const SekretarisWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const BendaharaWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    "Seksi Pengasuh",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    '${model.seksiPengasuh1}\n${model.seksiPengasuh2}\n${model.seksiPengasuh3}\n${model.seksiPengasuh4}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  FirstWidget(
+                    title: "Ketua",
+                    data: model.dataKetua,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Ibadah",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    '${model.seksiIbadah1}\n${model.seksiIbadah2}\n${model.seksiIbadah3}\n${model.seksiIbadah4}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  FirstWidget(
+                    title: 'Sekretaris',
+                    data: model.dataSekretaris,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Pendidikan",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    '${model.seksiPendidikan1}\n${model.seksiPendidikan2}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  FirstWidget(
+                    title: 'Bendahara',
+                    data: model.dataBendahara,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Kesehatan",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    model.seksiKesehatan,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Pengasuh',
+                    data: model.dataPengasuh,
+                    length: model.dataPengasuhLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Kebersihan",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    model.seksiKebersihan,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Ibadah',
+                    data: model.dataIbadah,
+                    length: model.dataIbadahLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Keterampilan",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    model.seksiKeterampilan1,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Pendidikan',
+                    data: model.dataPendidikan,
+                    length: model.dataPendidikanLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Sarana Prasarana",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    model.seksiSaranaPrasarana1,
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Kesehatan',
+                    data: model.dataKesehatan,
+                    length: model.dataKesehatanLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Konsumsi",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '${model.seksiKonsumsi1}\n${model.seksiKonsumsi2}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Kebersihan',
+                    data: model.dataKebersihan,
+                    length: model.dataKebersihanLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Keamanan",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '${model.seksiKeamanan1}\n${model.seksiKeamanan2}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Keterampilan',
+                    data: model.dataKeterampilan,
+                    length: model.dataKeterampilanLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Gedung",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '${model.seksiGedung1}\n${model.seksiGedung2}\n${model.seksiGedung3}\n${model.seksiGedung4}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Sarana dan Prasarana',
+                    data: model.dataSaranaDanPrasarana,
+                    length: model.dataSaranaDanPrasaranaLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Seksi Wisma",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '${model.seksiWisma1}\n${model.seksiWisma2}\n${model.seksiWisma3}\n${model.seksiWisma4}\n${model.seksiWisma5}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Konsumsi',
+                    data: model.dataKonsumsi,
+                    length: model.dataKonsumsiLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Kelompok Putri",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '${model.kelompokPutri1}\n${model.kelompokPutri2}\n${model.kelompokPutri3}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Keamanan',
+                    data: model.dataKeamanan,
+                    length: model.dataKeamananLength,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Kelompok Putra",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  SecondWidget(
+                    title: 'Seksi Gedung',
+                    data: model.dataGedung,
+                    length: model.dataGedungLength,
                   ),
-                  Text(
-                    '${model.kelompokPutra1}\n${model.kelompokPutra2}\n${model.kelompokPutra3}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SecondWidget(
+                    title: 'Seksi Wisma',
+                    data: model.dataWisma,
+                    length: model.dataWismaLength,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SecondWidget(
+                    title: 'Kelompok Putra',
+                    data: model.dataKelompokPutra,
+                    length: model.dataKelompokPutraLength,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SecondWidget(
+                    title: 'Kelompok Putri',
+                    data: model.dataKelompokPutri,
+                    length: model.dataKelompokPutriLength,
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                 ],
               ),
@@ -276,9 +170,16 @@ class StrukturOrganisasiView extends StatelessWidget {
   }
 }
 
-class BendaharaWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
-  const BendaharaWidget({
+class SecondWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
+  final String title;
+  final Map<String, dynamic> data;
+  final int length;
+
+  const SecondWidget({
     super.key,
+    required this.title,
+    required this.data,
+    required this.length,
   });
 
   @override
@@ -292,55 +193,9 @@ class BendaharaWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "Bendahara",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  // model.editSekretaris();
-                },
-                icon: const Icon(Icons.edit),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Text(
-            viewModel.bendahara,
-            style: const TextStyle(
-              fontSize: 20,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SekretarisWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
-  const SekretarisWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, StrukturOrganisasiViewModel viewModel) {
-    return Card(
-      elevation: 4,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                "Sekretaris",
-                style: TextStyle(
+              Text(
+                title,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -350,30 +205,65 @@ class SekretarisWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
               ),
               IconButton(
                 onPressed: () {
-                  // model.editSekretaris();
+                  viewModel.editData(title, true);
                 },
                 icon: const Icon(Icons.edit),
               )
             ],
           ),
-          const SizedBox(
-            height: 2,
-          ),
-          Text(
-            viewModel.sekretaris,
-            style: const TextStyle(
-              fontSize: 20,
+          for (var i = 0; i < length; i++)
+            Column(
+              children: [
+                Center(
+                  child: data.isEmpty
+                      ? null
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.network(
+                            '${dotenv.env['url']}${data['img_url$i']}',
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  data['nama$i'] ?? '...',
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                // create a line
+                const Divider(
+                  color: Colors.black,
+                  height: 20,
+                  thickness: 1,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                const SizedBox(height: 5),
+              ],
             ),
-          ),
         ],
       ),
     );
   }
 }
 
-class KetuaWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
-  const KetuaWidget({
+class FirstWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
+  final String title;
+  final Map<String, dynamic> data;
+
+  const FirstWidget({
     super.key,
+    required this.title,
+    required this.data,
   });
 
   @override
@@ -387,9 +277,9 @@ class KetuaWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "Ketua",
-                style: TextStyle(
+              Text(
+                title,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -399,17 +289,30 @@ class KetuaWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
               ),
               IconButton(
                 onPressed: () {
-                  viewModel.editData('ketua', false);
+                  viewModel.editData(title, false);
                 },
                 icon: const Icon(Icons.edit),
               )
             ],
           ),
+          Center(
+            child: data.isEmpty
+                ? null
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.network(
+                      '${dotenv.env['url']}${data['img_url']}',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+          ),
           const SizedBox(
             height: 2,
           ),
           Text(
-            viewModel.ketua,
+            data['nama'] ?? '...',
             style: const TextStyle(
               fontSize: 20,
             ),

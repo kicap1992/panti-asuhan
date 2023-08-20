@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:panti_asuhan/app/themes/app_colors.dart';
-import 'package:panti_asuhan/app/themes/app_text.dart';
-import 'package:panti_asuhan/ui/widgets/my_button.dart';
-import 'package:panti_asuhan/ui/widgets/my_textformfield.dart';
 import 'package:stacked/stacked.dart';
 import 'package:validatorless/validatorless.dart';
 
+import '../../../app/themes/app_colors.dart';
+import '../../../app/themes/app_text.dart';
+import '../../widgets/my_button.dart';
+import '../../widgets/my_textformfield.dart';
 import './tambah_dana_sosial_view_model.dart';
 
 class TambahDanaSosialView extends StatelessWidget {
@@ -46,19 +46,66 @@ class TambahDanaSosialView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Nama Donator",
+                        "Bentuk Donasi",
                         style: regularTextStyle.copyWith(color: mainColor),
                       ),
-                      MyTextFormField(
-                        hintText: "Nama Donatur",
-                        controller: model.namaController,
-                        maxLines: 1,
-                        validator: Validatorless.required(
-                            'Nama Donatur tidak boleh kosong'),
+                      Container(
+                        width: double.infinity,
+                        height: 60,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(
+                            color: mainColor,
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: model.bentukDonasi,
+                            onChanged: (String? newValue) {
+                              // model.setSelectedbentukDonasi(newValue!);
+                              model.log.i(newValue);
+                              model.bentukDonasi = newValue!;
+                              model.notifyListeners();
+                            },
+                            items: model.bentukDonasiList.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: regularTextStyle.copyWith(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 20),
+                      Visibility(
+                        visible: model.bentukDonasi == 'Pemasukan',
+                        child: Text(
+                          "Nama Donator",
+                          style: regularTextStyle.copyWith(color: mainColor),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.bentukDonasi == 'Pemasukan',
+                        child: MyTextFormField(
+                          hintText: "Nama Donatur",
+                          controller: model.namaController,
+                          maxLines: 1,
+                          // validator: Validatorless.required(
+                          //     'Nama Donatur tidak boleh kosong'),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.bentukDonasi == 'Pemasukan',
+                        child: const SizedBox(height: 20),
+                      ),
                       Text(
-                        "Jenis Donasi",
+                        "Jenis Donasi / Pengeluaran",
                         style: regularTextStyle.copyWith(color: mainColor),
                       ),
                       Container(

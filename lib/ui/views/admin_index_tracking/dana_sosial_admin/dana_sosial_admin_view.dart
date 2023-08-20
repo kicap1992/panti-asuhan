@@ -167,15 +167,52 @@ class TheData extends ViewModelWidget<DanaSosialAdminViewModel> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(viewModel.danaSosialModelList[index].nama ?? '',
-                    style: regularTextStyle.copyWith(
-                        fontSize: 13, color: mainColor)),
                 Text(
-                  viewModel.danaSosialModelList[index].jenisDonasi == 'Uang'
-                      ? (viewModel.isLogin == true ? 'Rp. $jumlahDonasi' : '-')
-                      : 'Donasi Barang',
-                  style:
-                      regularTextStyle.copyWith(fontSize: 13, color: mainColor),
+                  viewModel.danaSosialModelList[index].bentuk == 'Pemasukan'
+                      ? 'Pemasukan'
+                      : 'Pengeluaran',
+                  style: boldTextStyle.copyWith(
+                    fontSize: 14,
+                    color: viewModel.danaSosialModelList[index].bentuk ==
+                            'Pemasukan'
+                        ? Colors.green
+                        : Colors.red,
+                  ),
+                ),
+                Text(
+                  viewModel.danaSosialModelList[index].nama ?? '-',
+                  style: regularTextStyle.copyWith(
+                    fontSize: 13,
+                    color: viewModel.danaSosialModelList[index].bentuk ==
+                            'Pemasukan'
+                        ? Colors.green
+                        : Colors.red,
+                  ),
+                ),
+                Text(
+                  // viewModel.danaSosialModelList[index].jenisDonasi == 'Uang'
+                  //     ? (viewModel.isLogin == true ? 'Rp. $jumlahDonasi' : '-')
+                  //     : 'Donasi Barang',
+                  viewModel.danaSosialModelList[index].bentuk == 'Pemasukan'
+                      ? (viewModel.danaSosialModelList[index].jenisDonasi ==
+                              'Uang'
+                          ? (viewModel.isLogin == true
+                              ? 'Rp. $jumlahDonasi'
+                              : '-')
+                          : 'Donasi Barang')
+                      : (viewModel.danaSosialModelList[index].jenisDonasi ==
+                              'Uang'
+                          ? (viewModel.isLogin == true
+                              ? 'Rp. $jumlahDonasi'
+                              : '-')
+                          : 'Pengeluaran Barang'),
+                  style: regularTextStyle.copyWith(
+                    fontSize: 13,
+                    color: viewModel.danaSosialModelList[index].bentuk ==
+                            'Pemasukan'
+                        ? Colors.green
+                        : Colors.red,
+                  ),
                 ),
                 Text(
                   viewModel.danaSosialModelList[index].status ?? '',

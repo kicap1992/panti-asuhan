@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../app/app.dialogs.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.logger.dart';
 import '../../../../app/core/custom_base_view_model.dart';
@@ -63,5 +65,47 @@ class EditSiswaViewModel extends CustomBaseViewModel {
       setBusy(false);
       easyLoading.dismissLoading();
     }
+  }
+
+  void deleteData() async {
+    setBusy(true);
+    easyLoading.showLoading();
+    try {
+      var response = await _httpService.postWithFormData(
+        'siswa_delete',
+        FormData.fromMap(
+          {
+            'id': siswaModel!.idSiswa,
+          },
+        ),
+      );
+      log.i(response.data);
+
+      snackbarService.showSnackbar(
+        message: 'Data berhasil dihapus',
+        title: 'Berhasil',
+        duration: const Duration(seconds: 2),
+      );
+      // navigationService.back();
+    } catch (e) {
+      snackbarService.showSnackbar(
+        message: 'Data gagal dihapus',
+        title: 'Gagal',
+        duration: const Duration(seconds: 2),
+      );
+      log.e(e);
+    } finally {
+      setBusy(false);
+      easyLoading.dismissLoading();
+    }
+  }
+
+  editData() async {
+    var res = dialogService.showCustomDialog(
+      variant: DialogType.editDialogSiswaView,
+      data: siswaModel,
+    );
+
+    res;
   }
 }

@@ -20,7 +20,9 @@ class MyHttpServices {
   Future<Response> get(String path) async {
     try {
       return await _dio.get(path);
-    } on DioError {
+    } on DioError catch (e) {
+      log.e(e.message);
+      log.e(e.response);
       rethrow;
     }
   }
@@ -28,8 +30,31 @@ class MyHttpServices {
   Future<Response> postWithFormData(String path, FormData formData) async {
     try {
       return await _dio.post(path, data: formData);
-    } on DioError {
+    } on DioError catch (e) {
+      log.e(e.message);
+      log.e(e.response);
       rethrow;
     }
   }
+
+  // // delete
+  // Future<Response> delete(String path, FormData data) async {
+  //   try {
+  //     // log.i('path: $path');
+  //     return await _dio.delete(
+  //       path,
+  //       data: data,
+  //       // encoding: Encoding.getByName('utf-8'),
+  //       options: Options(
+  //         headers: {
+  //           'Content-Type': 'application/x-www-form-urlencoded',
+  //         },
+  //       ),
+  //     );
+  //   } on DioError catch (e) {
+  //     log.e(e.message);
+  //     log.e(e.response);
+  //     rethrow;
+  //   }
+  // }
 }

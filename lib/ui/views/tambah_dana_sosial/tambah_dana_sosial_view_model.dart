@@ -13,6 +13,9 @@ class TambahDanaSosialViewModel extends CustomBaseViewModel {
   final _httpService = locator<MyHttpServices>();
   final easyLoading = locator<MyEasyLoading>();
 
+  String bentukDonasi = 'Pemasukan';
+  List<String> bentukDonasiList = ['Pemasukan', 'Pengeluaran'];
+
   String jenisDonasi = 'Uang';
   List<String> jenisDonasiList = ['Uang', 'Barang'];
 
@@ -45,6 +48,7 @@ class TambahDanaSosialViewModel extends CustomBaseViewModel {
     easyLoading.customLoading('Menambahkan data...');
     try {
       var formData = FormData.fromMap({
+        'bentuk': bentukDonasi,
         'nama': namaController.text,
         'jumlah': jumlahController.text,
         'tanggal': tanggalController.text,

@@ -55,30 +55,29 @@ class EditStrukrurOrganisasiDialogView extends StatelessWidget {
                         ),
                       ),
                       // top right rounded add button
-                      // request?.data['tambahan'] == false
-                      //     ? const SizedBox()
-                      //     :
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            model.addWidget();
-                            // model.check();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(20),
+                      request?.data['tambahan'] == false
+                          ? const SizedBox()
+                          : Positioned(
+                              top: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  model.addWidget();
+                                  // model.check();
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
-                            child: const Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(
@@ -90,7 +89,7 @@ class EditStrukrurOrganisasiDialogView extends StatelessWidget {
                       text: 'Simpan',
                       onPressed: () {
                         // model.check();
-                        model.uploadJabatan();
+                        model.uploadJabatan(completer!);
                       },
                     ),
                   ),
@@ -108,6 +107,7 @@ class TheWidget extends ViewModelWidget<EditStrukrurOrganisasiDialogViewModel> {
   final TextEditingController controller;
   final int index;
   @override
+  // ignore: overridden_fields
   final Key key;
 
   const TheWidget({
@@ -151,7 +151,7 @@ class TheWidget extends ViewModelWidget<EditStrukrurOrganisasiDialogViewModel> {
           ],
         ),
         // top right rounded add button
-        index == 0
+        index == 1
             ? const SizedBox()
             : Positioned(
                 top: 0,

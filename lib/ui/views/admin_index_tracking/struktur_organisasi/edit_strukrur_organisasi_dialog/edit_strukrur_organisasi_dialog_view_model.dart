@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../../../../app/app.locator.dart';
 import '../../../../../app/app.logger.dart';
@@ -89,7 +90,35 @@ class EditStrukrurOrganisasiDialogViewModel extends CustomBaseViewModel {
     }
   }
 
-  uploadJabatan() async {
+  uploadJabatan(Function(DialogResponse p1) completer) async {
+    // check if the controller is empty
+    for (var i = 1; i <= controllers.length; i++) {
+      String key = controllers.keys.elementAt(i - 1);
+      if (controllers[key]!.text.isEmpty) {
+        snackbarService.showSnackbar(
+          message: 'Nama tidak boleh kosong',
+          title: 'Error',
+          duration: const Duration(seconds: 2),
+        );
+        return;
+      }
+    }
+
+    // check if the image is empty
+    for (var i = 1; i <= controllers.length; i++) {
+      // String key = controllers.keys.elementAt(i - 1);
+      if (!imagePaths.containsKey('image$i')) {
+        snackbarService.showSnackbar(
+          message: 'Gambar tidak boleh kosong',
+          title: 'Error',
+          duration: const Duration(seconds: 2),
+        );
+        return;
+      }
+    }
+
+    setBusy(true);
+    easyloading.customLoading('Edit Detail Jabatan $name');
     Map<String, dynamic> array = {
       'jabatan': name,
       'jumlah': controllers.length.toString(),
@@ -108,20 +137,25 @@ class EditStrukrurOrganisasiDialogViewModel extends CustomBaseViewModel {
         contentType: MediaType.parse('image/jpeg'),
       );
     }
-
     FormData formData = FormData.fromMap(array);
+    // log.i(array);
+    try {
+      // // // log.i(formData.fields);
+      await _httpService.postWithFormData('edit_jabatan', formData);
 
-    // // // log.i(formData.fields);
-    var response =
-        await _httpService.postWithFormData('edit_jabatan', formData);
-
-    log.i(response.data);
-
-    setBusy(true);
-    easyloading.customLoading('Edit Detail Jabatan $name');
-    await Future.delayed(const Duration(seconds: 1));
-    easyloading.dismissLoading();
-    setBusy(false);
+      // log.i(response.data);
+      completer(
+        DialogResponse(confirmed: true),
+      );
+    } catch (e) {
+      log.e(e);
+      completer(
+        DialogResponse(confirmed: false),
+      );
+    } finally {
+      easyloading.dismissLoading();
+      setBusy(false);
+    }
   }
 
   void removeWidget(int index, Key containerKey) {

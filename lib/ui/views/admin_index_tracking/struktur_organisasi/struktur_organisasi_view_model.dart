@@ -1,61 +1,155 @@
-import 'package:panti_asuhan/app/core/custom_base_view_model.dart';
-
 import '../../../../app/app.dialogs.dart';
+import '../../../../app/app.locator.dart';
 import '../../../../app/app.logger.dart';
+import '../../../../app/core/custom_base_view_model.dart';
+import '../../../../services/http_services.dart';
+import '../../../../services/my_easyloading.dart';
 
 class StrukturOrganisasiViewModel extends CustomBaseViewModel {
   final log = getLogger('StrukturOrganisasiViewModel');
+  final _httpService = locator<MyHttpServices>();
+  final easyLoading = locator<MyEasyLoading>();
 
-  String ketua = "Dr. Andi Fitriani D, S.Ag, M.Pd";
-  String sekretaris = "Fitriana Buyanus, S.Si ., M.Kes";
-  String bendahara = "Hj. Djaliah, A.Ma";
+  Map<String, dynamic> dataKetua = {};
+  Map<String, dynamic> dataSekretaris = {};
+  Map<String, dynamic> dataBendahara = {};
 
-  String seksiPengasuh1 = "Dra Hj, CIA";
-  String seksiPengasuh2 = "Dahang, S.Ag";
-  String seksiPengasuh3 = "Sumadin, S.Pd.I";
-  String seksiPengasuh4 = "Darwan";
+  Map<String, dynamic> dataPengasuh = {};
+  int dataPengasuhLength = 0;
 
-  String seksiIbadah1 = "Drs. Najib La'ady";
-  String seksiIbadah2 = "Sumadin, S.Pd.I";
-  String seksiIbadah3 = "Ahmad";
-  String seksiIbadah4 = "Darwan";
+  Map<String, dynamic> dataIbadah = {};
+  int dataIbadahLength = 0;
 
-  String seksiPendidikan1 = "Dra. Hj. CIA";
-  String seksiPendidikan2 = "Hj. Djaliah, A.Ma";
+  Map<String, dynamic> dataPendidikan = {};
+  int dataPendidikanLength = 0;
 
-  String seksiKesehatan = "Haerul, SKM";
-  String seksiKebersihan = "Bd. Lina Sutomo";
+  Map<String, dynamic> dataKebersihan = {};
+  int dataKebersihanLength = 0;
 
-  String seksiKeterampilan1 = "Yuslihudriani, S.Pd";
+  Map<String, dynamic> dataKesehatan = {};
+  int dataKesehatanLength = 0;
 
-  String seksiSaranaPrasarana1 = "Muh.Adham, ST";
+  Map<String, dynamic> dataKeterampilan = {};
+  int dataKeterampilanLength = 0;
 
-  String seksiKonsumsi1 = "Fatmawati";
-  String seksiKonsumsi2 = "Rasnaya";
+  Map<String, dynamic> dataSaranaDanPrasarana = {};
+  int dataSaranaDanPrasaranaLength = 0;
 
-  String seksiKeamanan1 = "Firdaus";
-  String seksiKeamanan2 = "Ahmad";
+  Map<String, dynamic> dataKonsumsi = {};
+  int dataKonsumsiLength = 0;
 
-  String seksiGedung1 = "Dra. Bangsuari";
-  String seksiGedung2 = "Hidayani";
-  String seksiGedung3 = "Dahang. S,Ag";
-  String seksiGedung4 = "Saharia";
+  Map<String, dynamic> dataKeamanan = {};
+  int dataKeamananLength = 0;
 
-  String seksiWisma1 = "Drs. Muh, Yasmin";
-  String seksiWisma2 = "Hj. Hadilah";
-  String seksiWisma3 = "Muh.Adham, ST";
-  String seksiWisma4 = "Ahmad";
-  String seksiWisma5 = "Dahang, S.Ag";
+  Map<String, dynamic> dataGedung = {};
+  int dataGedungLength = 0;
 
-  String kelompokPutri1 = "St. Khadijah";
-  String kelompokPutri2 = "St. Aisyah";
-  String kelompokPutri3 = "St. Fatimah";
+  Map<String, dynamic> dataWisma = {};
+  int dataWismaLength = 0;
 
-  String kelompokPutra1 = "Ahmad Dahlan";
-  String kelompokPutra2 = "Ar. Fahruddin";
-  String kelompokPutra3 = "Amin Rais";
+  Map<String, dynamic> dataKelompokPutra = {};
+  int dataKelompokPutraLength = 0;
 
-  Future<void> init() async {}
+  Map<String, dynamic> dataKelompokPutri = {};
+  int dataKelompokPutriLength = 0;
+
+  Future<void> init() async {
+    getData('Ketua', false, null);
+    getData('Sekretaris', false, null);
+    getData('Bendahara', false, null);
+    getData('Seksi Pengasuh', true, dataPengasuhLength);
+    getData('Seksi Ibadah', true, dataIbadahLength);
+    getData('Seksi Pendidikan', true, dataPendidikanLength);
+    getData('Seksi Kebersihan', true, dataKebersihanLength);
+    getData('Seksi Kesehatan', true, dataKesehatanLength);
+    getData('Seksi Keterampilan', true, dataKeterampilanLength);
+    getData('Sarana dan Prasarana', true, dataSaranaDanPrasaranaLength);
+    getData('Seksi Konsumsi', true, dataKonsumsiLength);
+    getData('Seksi Keamanan', true, dataKeamananLength);
+    getData('Seksi Gedung', true, dataGedungLength);
+    getData('Seksi Wisma', true, dataWismaLength);
+    getData('Kelompok Putra', true, dataKelompokPutraLength);
+    getData('Kelompok Putri', true, dataKelompokPutriLength);
+  }
+
+  getData(String jabatan, bool stat, int? length) async {
+    easyLoading.customLoading('Loading Data');
+    setBusy(true);
+
+    try {
+      var response = await _httpService.get('jabatan?jabatan=$jabatan');
+      // log.i(response.data);
+      if (response.data['data'].length == 0) return;
+      Map<String, dynamic> data = {};
+      if (!stat) {
+        var datanya = response.data['data'][0];
+        data['nama'] = datanya['nama'];
+        data['img_url'] = datanya['img_url'];
+        // log.i(data);
+        // return;
+      } else {
+        var datanya = response.data['data'];
+        length = datanya.length;
+        for (var i = 0; i < datanya.length; i++) {
+          data['nama$i'] = datanya[i]['nama'];
+          data['img_url$i'] = datanya[i]['img_url'];
+        }
+      }
+
+      if (jabatan == 'Ketua') {
+        dataKetua = data;
+      } else if (jabatan == 'Sekretaris') {
+        dataSekretaris = data;
+      } else if (jabatan == 'Bendahara') {
+        dataBendahara = data;
+      } else if (jabatan == 'Seksi Pengasuh') {
+        dataPengasuh = data;
+        dataPengasuhLength = length!;
+      } else if (jabatan == 'Seksi Ibadah') {
+        dataIbadah = data;
+        dataIbadahLength = length!;
+      } else if (jabatan == 'Seksi Pendidikan') {
+        dataPendidikan = data;
+        dataPendidikanLength = length!;
+      } else if (jabatan == 'Seksi Kebersihan') {
+        dataKebersihan = data;
+        dataKebersihanLength = length!;
+      } else if (jabatan == 'Seksi Kesehatan') {
+        dataKesehatan = data;
+        dataKesehatanLength = length!;
+      } else if (jabatan == 'Seksi Keterampilan') {
+        dataKeterampilan = data;
+        dataKeterampilanLength = length!;
+      } else if (jabatan == 'Sarana dan Prasarana') {
+        dataSaranaDanPrasarana = data;
+        dataSaranaDanPrasaranaLength = length!;
+      } else if (jabatan == 'Seksi Konsumsi') {
+        dataKonsumsi = data;
+        dataKonsumsiLength = length!;
+      } else if (jabatan == 'Seksi Keamanan') {
+        dataKeamanan = data;
+        dataKeamananLength = length!;
+      } else if (jabatan == 'Seksi Gedung') {
+        dataGedung = data;
+        dataGedungLength = length!;
+      } else if (jabatan == 'Seksi Wisma') {
+        dataWisma = data;
+        dataWismaLength = length!;
+      } else if (jabatan == 'Kelompok Putra') {
+        dataKelompokPutra = data;
+        dataKelompokPutraLength = length!;
+      } else if (jabatan == 'Kelompok Putri') {
+        dataKelompokPutri = data;
+        dataKelompokPutriLength = length!;
+      }
+    } catch (e) {
+      log.e(e);
+    } finally {
+      notifyListeners();
+      setBusy(false);
+      easyLoading.dismissLoading();
+    }
+  }
 
   void editData(String jabatan, bool bool) {
     var res = dialogService.showCustomDialog(
@@ -66,6 +160,9 @@ class StrukturOrganisasiViewModel extends CustomBaseViewModel {
       },
     );
 
-    res;
+    res.whenComplete(() async => {
+          // await Future.delayed(Duration(seconds: 1)),
+          init(),
+        });
   }
 }
