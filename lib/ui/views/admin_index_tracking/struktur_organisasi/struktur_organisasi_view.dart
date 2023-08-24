@@ -203,12 +203,14 @@ class SecondWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
               const SizedBox(
                 width: 10,
               ),
-              IconButton(
-                onPressed: () {
-                  viewModel.editData(title, true);
-                },
-                icon: const Icon(Icons.edit),
-              )
+              viewModel.role == 'admin'
+                  ? IconButton(
+                      onPressed: () {
+                        viewModel.editData(title, true);
+                      },
+                      icon: const Icon(Icons.edit),
+                    )
+                  : const SizedBox(),
             ],
           ),
           for (var i = 0; i < length; i++)
@@ -287,12 +289,14 @@ class FirstWidget extends ViewModelWidget<StrukturOrganisasiViewModel> {
               const SizedBox(
                 width: 10,
               ),
-              IconButton(
-                onPressed: () {
-                  viewModel.editData(title, false);
-                },
-                icon: const Icon(Icons.edit),
-              )
+              viewModel.role == 'admin'
+                  ? IconButton(
+                      onPressed: () {
+                        viewModel.editData(title, false);
+                      },
+                      icon: const Icon(Icons.edit),
+                    )
+                  : const SizedBox(),
             ],
           ),
           Center(

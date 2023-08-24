@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../../app/app.dialogs.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.logger.dart';
@@ -9,6 +11,7 @@ class StrukturOrganisasiViewModel extends CustomBaseViewModel {
   final log = getLogger('StrukturOrganisasiViewModel');
   final _httpService = locator<MyHttpServices>();
   final easyLoading = locator<MyEasyLoading>();
+  String? role;
 
   Map<String, dynamic> dataKetua = {};
   Map<String, dynamic> dataSekretaris = {};
@@ -54,6 +57,9 @@ class StrukturOrganisasiViewModel extends CustomBaseViewModel {
   int dataKelompokPutriLength = 0;
 
   Future<void> init() async {
+    prefs.then((SharedPreferences prefs) {
+      role = prefs.getString('role');
+    });
     getData('Ketua', false, null);
     getData('Sekretaris', false, null);
     getData('Bendahara', false, null);

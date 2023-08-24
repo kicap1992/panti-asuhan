@@ -27,6 +27,8 @@ class DetailDanaSosialViewModel extends CustomBaseViewModel {
   TextEditingController jenisController = TextEditingController();
   TextEditingController keteranganController = TextEditingController();
 
+  TextEditingController bentukController = TextEditingController();
+
   Future<void> init(int id) async {
     log.i('init and id: $id');
     getData(id);
@@ -41,7 +43,7 @@ class DetailDanaSosialViewModel extends CustomBaseViewModel {
     easyLoading.showLoading();
     try {
       var response = await _httpService.get('dana_sosial_detail?id=$id');
-      log.i(response.data);
+      log.i(response.data['data']);
       danaSosialModel = DanaSosialModel.fromJson(response.data['data']);
       namaController.text = danaSosialModel!.nama!;
       tanggalController.text = danaSosialModel!.tanggal!;
@@ -50,12 +52,14 @@ class DetailDanaSosialViewModel extends CustomBaseViewModel {
       jenisController.text = danaSosialModel!.jenisDonasi!;
       keteranganController.text = danaSosialModel!.keterangan!;
 
+      bentukController.text = danaSosialModel!.bentuk!;
+
       if (danaSosialModel!.jenisDonasi == 'Uang') {
         jenisBool = true;
       } else {
         jenisBool = false;
       }
-      log.i('status: ${danaSosialModel!.status}');
+      // log.i('status: ${danaSosialModel!.status}');
       setBusy(false);
       notifyListeners();
     } catch (e) {

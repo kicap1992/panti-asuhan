@@ -26,10 +26,10 @@ class DanaSosialModel {
   DanaSosialModel.fromJson(Map<String, dynamic> json) {
     idDanaSosial = json['id_dana_sosial'];
     bentuk = json['bentuk'];
-    nama = json['nama'];
+    nama = json['nama'] ?? '';
     jumlah = json['jumlah'];
     tanggal = json['tanggal'];
-    keterangan = json['ket'];
+    keterangan = json['ket'] ?? '';
     jenisDonasi = json['jenis'];
     status =
         json['status'] == '0' ? 'Belum Dikonfirmasi' : 'Sudah Dikonfirmasi';

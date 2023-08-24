@@ -270,7 +270,9 @@ class EditDialogSiswaView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            completer(DialogResponse(confirmed: false));
+                          },
                           child: const Text(
                             'Batal',
                             style: TextStyle(
@@ -281,15 +283,14 @@ class EditDialogSiswaView extends StatelessWidget {
                         TextButton(
                           onPressed: () async {
                             if (model.formKey.currentState!.validate()) {
-                              // bool res = await model.postData();
-                              // model.log.i("res: $res");
-                              // if (res) {
-                              //   completer(
-                              //     DialogResponse(
-                              //       confirmed: true,
-                              //     ),
-                              //   );
-                              // }
+                              bool res = await model.updateSiswa();
+
+                              if (res) {
+                                Navigator.pop(context);
+                                completer(DialogResponse(confirmed: true));
+                              }
+
+                              // completer(DialogResponse(confirmed: true));
                             }
                           },
                           child: const Text(

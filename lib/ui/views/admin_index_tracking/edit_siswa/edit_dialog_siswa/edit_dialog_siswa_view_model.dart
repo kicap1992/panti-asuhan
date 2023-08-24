@@ -1,12 +1,18 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 
+import '../../../../../app/app.locator.dart';
 import '../../../../../app/app.logger.dart';
 import '../../../../../app/core/custom_base_view_model.dart';
 import '../../../../../model/siswa_model.dart';
+import '../../../../../services/http_services.dart';
+import '../../../../../services/my_easyloading.dart';
 
 class EditDialogSiswaViewModel extends CustomBaseViewModel {
   final log = getLogger('EditDialogSiswaViewModel');
+  final easyLoading = locator<MyEasyLoading>();
+  final _httpService = locator<MyHttpServices>();
   SiswaModel? siswaModel;
   String jenisKelamin = 'Laki-laki';
   List<String> jenisKelaminList = ['Laki-laki', 'Perempuan'];
@@ -64,6 +70,39 @@ class EditDialogSiswaViewModel extends CustomBaseViewModel {
     if (datePicked != null) {
       String date = datePicked.toString().split(' ')[0];
       tanggalLahirController.text = date;
+    }
+  }
+
+  Future<bool> updateSiswa() async {
+    setBusy(true);
+    easyLoading.customLoading('Updating data...');
+
+    try {
+      var formData = FormData.fromMap({
+        'id': siswaModel!.idSiswa,
+        'nama': namaController.text,
+        'tanggal_lahir': tanggalLahirController.text,
+        'tempat_lahir': tempatLahirController.text,
+        'jenis_kelamin': jenisKelamin,
+        'alamat': alamatController.text,
+        'no_telpon': noTelponController.text,
+        'agama': agamaController.text,
+        'kewarganegaraan': kewarganegaraanController.text,
+        'pendidikan_sd': pendidikanSDController.text,
+        'pendidikan_smp': pendidikanSMPController.text,
+        'pendidikan_sma': pendidikanSMAController.text,
+        'kemampuan': kemampuanController.text,
+        'hobi': hobiController.text,
+      });
+      await _httpService.postWithFormData('siswa_edit', formData);
+      snackbarService.showSnackbar(message: 'Data berhasil diupdate');
+      return true;
+    } catch (e) {
+      log.e(e);
+      return false;
+    } finally {
+      easyLoading.dismissLoading();
+      setBusy(false);
     }
   }
 }

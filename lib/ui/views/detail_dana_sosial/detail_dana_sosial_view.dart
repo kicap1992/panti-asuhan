@@ -32,151 +32,320 @@ class DetailDanaSosialView extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.all(15),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Nama Donator",
-                    style: regularTextStyle.copyWith(color: mainColor),
-                  ),
-                ),
-                MyTextFormField(
-                  controller: model.namaController,
-                  maxLines: 1,
-                  readOnly: true,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Tanggal",
-                    style: regularTextStyle.copyWith(color: mainColor),
-                  ),
-                ),
-                MyTextFormField(
-                  controller: model.tanggalController,
-                  maxLines: 1,
-                  readOnly: true,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Jenis",
-                    style: regularTextStyle.copyWith(color: mainColor),
-                  ),
-                ),
-                MyTextFormField(
-                  controller: model.jenisController,
-                  maxLines: 1,
-                  readOnly: true,
-                ),
-                Visibility(
-                  visible: model.jenisBool,
-                  child: const SizedBox(
-                    height: 15,
-                  ),
-                ),
-                Visibility(
-                  visible: model.jenisBool,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Jumlah",
-                      style: regularTextStyle.copyWith(color: mainColor),
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: model.jenisBool,
-                  child: MyTextFormField(
-                    controller: model.jumlahController,
-                    maxLines: 1,
-                    readOnly: true,
-                  ),
-                ),
-                Visibility(
-                  visible: !model.jenisBool,
-                  child: const SizedBox(
-                    height: 15,
-                  ),
-                ),
-                Visibility(
-                  visible: !model.jenisBool,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Keterangan",
-                      style: regularTextStyle.copyWith(color: mainColor),
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: !model.jenisBool,
-                  child: MyTextFormField(
-                    controller: model.keteranganController,
-                    maxLines: 2,
-                    readOnly: true,
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Tanda Tangan",
-                          style: regularTextStyle.copyWith(color: mainColor),
-                        ),
-                        SizedBox(
-                          height: 150,
-                          width: 150,
-                          child: model.danaSosialModel == null
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: mainColor),
-                                  ),
-                                )
-                              : (model.danaSosialModel!.status! ==
-                                      'Belum Dikonfirmasi'
-                                  ? const TtdWidget()
-                                  : Image.asset(
-                                      'assets/qrcode.png',
-                                      fit: BoxFit.cover,
-                                    )),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Dr. Andi Fitriani D, S.Ag, M.Pd",
-                          style: regularTextStyle.copyWith(
-                            color: mainColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        // create a horizontal line
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            child: model.danaSosialModel == null
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : (model.danaSosialModel!.bentuk == 'Pemasukan'
+                    ? PemasukanWidget()
+                    : PengeluaranWidget()),
           ),
         );
       },
+    );
+  }
+}
+
+class PengeluaranWidget extends ViewModelWidget<DetailDanaSosialViewModel> {
+  const PengeluaranWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, DetailDanaSosialViewModel viewModel) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Bentuk",
+            style: regularTextStyle.copyWith(color: mainColor),
+          ),
+        ),
+        MyTextFormField(
+          controller: viewModel.bentukController,
+          maxLines: 1,
+          readOnly: true,
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Tanggal",
+            style: regularTextStyle.copyWith(color: mainColor),
+          ),
+        ),
+        MyTextFormField(
+          controller: viewModel.tanggalController,
+          maxLines: 1,
+          readOnly: true,
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Jenis",
+            style: regularTextStyle.copyWith(color: mainColor),
+          ),
+        ),
+        MyTextFormField(
+          controller: viewModel.jenisController,
+          maxLines: 1,
+          readOnly: true,
+        ),
+        Visibility(
+          visible: viewModel.jenisBool,
+          child: const SizedBox(
+            height: 15,
+          ),
+        ),
+        Visibility(
+          visible: viewModel.jenisBool,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Jumlah",
+              style: regularTextStyle.copyWith(color: mainColor),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: viewModel.jenisBool,
+          child: MyTextFormField(
+            controller: viewModel.jumlahController,
+            maxLines: 1,
+            readOnly: true,
+          ),
+        ),
+        Visibility(
+          visible: !viewModel.jenisBool,
+          child: const SizedBox(
+            height: 15,
+          ),
+        ),
+        Visibility(
+          visible: !viewModel.jenisBool,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Keterangan",
+              style: regularTextStyle.copyWith(color: mainColor),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: !viewModel.jenisBool,
+          child: MyTextFormField(
+            controller: viewModel.keteranganController,
+            maxLines: 2,
+            readOnly: true,
+          ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Tanda Tangan",
+                  style: regularTextStyle.copyWith(color: mainColor),
+                ),
+                SizedBox(
+                  height: 150,
+                  width: 150,
+                  child: viewModel.danaSosialModel == null
+                      ? Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: mainColor),
+                          ),
+                        )
+                      : (viewModel.danaSosialModel!.status! ==
+                              'Belum Dikonfirmasi'
+                          ? const TtdWidget()
+                          : Image.asset(
+                              'assets/qrcode.png',
+                              fit: BoxFit.cover,
+                            )),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Dr. Andi Fitriani D, S.Ag, M.Pd",
+                  style: regularTextStyle.copyWith(
+                    color: mainColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                // create a horizontal line
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PemasukanWidget extends ViewModelWidget<DetailDanaSosialViewModel> {
+  const PemasukanWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, DetailDanaSosialViewModel viewModel) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Nama Donator",
+            style: regularTextStyle.copyWith(color: mainColor),
+          ),
+        ),
+        MyTextFormField(
+          controller: viewModel.namaController,
+          maxLines: 1,
+          readOnly: true,
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Tanggal",
+            style: regularTextStyle.copyWith(color: mainColor),
+          ),
+        ),
+        MyTextFormField(
+          controller: viewModel.tanggalController,
+          maxLines: 1,
+          readOnly: true,
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Jenis",
+            style: regularTextStyle.copyWith(color: mainColor),
+          ),
+        ),
+        MyTextFormField(
+          controller: viewModel.jenisController,
+          maxLines: 1,
+          readOnly: true,
+        ),
+        Visibility(
+          visible: viewModel.jenisBool,
+          child: const SizedBox(
+            height: 15,
+          ),
+        ),
+        Visibility(
+          visible: viewModel.jenisBool,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Jumlah",
+              style: regularTextStyle.copyWith(color: mainColor),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: viewModel.jenisBool,
+          child: MyTextFormField(
+            controller: viewModel.jumlahController,
+            maxLines: 1,
+            readOnly: true,
+          ),
+        ),
+        Visibility(
+          visible: !viewModel.jenisBool,
+          child: const SizedBox(
+            height: 15,
+          ),
+        ),
+        Visibility(
+          visible: !viewModel.jenisBool,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Keterangan",
+              style: regularTextStyle.copyWith(color: mainColor),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: !viewModel.jenisBool,
+          child: MyTextFormField(
+            controller: viewModel.keteranganController,
+            maxLines: 2,
+            readOnly: true,
+          ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Tanda Tangan",
+                  style: regularTextStyle.copyWith(color: mainColor),
+                ),
+                SizedBox(
+                  height: 150,
+                  width: 150,
+                  child: viewModel.danaSosialModel == null
+                      ? Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: mainColor),
+                          ),
+                        )
+                      : (viewModel.danaSosialModel!.status! ==
+                              'Belum Dikonfirmasi'
+                          ? const TtdWidget()
+                          : Image.asset(
+                              'assets/qrcode.png',
+                              fit: BoxFit.cover,
+                            )),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Dr. Andi Fitriani D, S.Ag, M.Pd",
+                  style: regularTextStyle.copyWith(
+                    color: mainColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                // create a horizontal line
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

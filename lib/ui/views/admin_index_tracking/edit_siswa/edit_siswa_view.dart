@@ -226,76 +226,80 @@ class EditSiswaView extends StatelessWidget {
                       // ),
                     ],
                   ),
-                  Positioned(
-                    top: 0,
-                    right: 45,
-                    // create a edit rounded button
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: blueColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          // model.changeEdit();
-                          model.editData();
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 13,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    // create a close rounded button
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: dangerColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          // model.changeEdit();
-                          model.dialogService
-                              .showDialog(
-                            title: 'Hapus Data',
-                            description:
-                                'Apakah anda yakin ingin menghapus data ini?',
-                            buttonTitle: 'Hapus',
-                            cancelTitle: 'Batal',
-                            buttonTitleColor: dangerColor,
-                            cancelTitleColor: mainColor,
-                          )
-                              .then((value) {
-                            if (value!.confirmed) {
-                              model.deleteData();
-                              // close dialog
-                              Navigator.pop(context);
-                              // model.navigationService.clearTillFirstAndShow(
-                              //     Routes.splashScreenView);
-                            }
-                          });
+                  model.role == 'admin'
+                      ? Positioned(
+                          top: 0,
+                          right: 45,
+                          // create a edit rounded button
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              color: blueColor,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                // model.changeEdit();
+                                model.editData();
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 13,
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                  model.role == 'admin'
+                      ? Positioned(
+                          top: 0,
+                          right: 0,
+                          // create a close rounded button
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              color: dangerColor,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                // model.changeEdit();
+                                model.dialogService
+                                    .showDialog(
+                                  title: 'Hapus Data',
+                                  description:
+                                      'Apakah anda yakin ingin menghapus data ini?',
+                                  buttonTitle: 'Hapus',
+                                  cancelTitle: 'Batal',
+                                  buttonTitleColor: dangerColor,
+                                  cancelTitleColor: mainColor,
+                                )
+                                    .then((value) {
+                                  if (value!.confirmed) {
+                                    model.deleteData();
+                                    // close dialog
+                                    Navigator.pop(context);
+                                    // model.navigationService.clearTillFirstAndShow(
+                                    //     Routes.splashScreenView);
+                                  }
+                                });
 
-                          // model.deleteData();
-                        },
-                        icon: const Icon(
-                          Icons.delete_forever,
-                          color: Colors.white,
-                          size: 15,
-                        ),
-                      ),
-                    ),
-                  ),
+                                // model.deleteData();
+                              },
+                              icon: const Icon(
+                                Icons.delete_forever,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),

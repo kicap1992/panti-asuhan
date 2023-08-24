@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../app/app.dialogs.dart';
 import '../../../../app/app.locator.dart';
@@ -13,6 +14,7 @@ class EditSiswaViewModel extends CustomBaseViewModel {
   final log = getLogger('EditSiswaViewModel');
   final _httpService = locator<MyHttpServices>();
   final easyLoading = locator<MyEasyLoading>();
+  String? role;
   SiswaModel? siswaModel;
   List<String> jenisKelaminList = ['Laki-laki', 'Perempuan'];
   String jenisKelamin = 'Laki-laki';
@@ -34,6 +36,9 @@ class EditSiswaViewModel extends CustomBaseViewModel {
   Future<void> init(int idSiswa) async {
     log.i('idSiswa: $idSiswa');
     getData(idSiswa);
+    prefs.then((SharedPreferences prefs) {
+      role = prefs.getString('role');
+    });
   }
 
   getData(int idSiswa) async {
@@ -101,11 +106,13 @@ class EditSiswaViewModel extends CustomBaseViewModel {
   }
 
   editData() async {
-    var res = dialogService.showCustomDialog(
+    var res = await dialogService.showCustomDialog(
       variant: DialogType.editDialogSiswaView,
       data: siswaModel,
     );
 
-    res;
+    if (res?.confirmed != true) {
+      init(int.parse(siswaModel!.idSiswa!));
+    }
   }
 }
