@@ -286,6 +286,7 @@ class EditDialogSiswaView extends StatelessWidget {
                               bool res = await model.updateSiswa();
 
                               if (res) {
+                                // ignore: use_build_context_synchronously
                                 Navigator.pop(context);
                                 completer(DialogResponse(confirmed: true));
                               }

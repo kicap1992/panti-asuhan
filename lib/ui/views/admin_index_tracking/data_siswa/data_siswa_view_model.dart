@@ -17,13 +17,31 @@ class DataSiswaViewModel extends CustomBaseViewModel {
 
   List<SiswaModel> siswaModelList = [];
 
+  int jumlahSiswa = 0;
+
   String? role;
 
   Future<void> init() async {
     await getData();
+    await getJumlahSiswa();
     prefs.then((SharedPreferences prefs) {
       role = prefs.getString('role');
     });
+  }
+
+  getJumlahSiswa() async {
+    setBusy(true);
+    easyLoading.showLoading();
+    try {
+      var response = await _httpService.get('jumlah_siswa');
+      log.i(response.data['data']);
+      jumlahSiswa = int.parse(response.data['data']['jumlah']);
+    } catch (e) {
+      log.e(e);
+    } finally {
+      setBusy(false);
+      easyLoading.dismissLoading();
+    }
   }
 
   getData() async {

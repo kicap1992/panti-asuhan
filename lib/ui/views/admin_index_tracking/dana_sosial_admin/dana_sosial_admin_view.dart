@@ -67,7 +67,7 @@ class DanaSosialAdminView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Rp. 1.000.000',
+                                'Rp. ${OtherFunction().commaFormat(model.jumlahDonasi)}',
                                 style: regularTextStyle.copyWith(
                                   color: Colors.white,
                                   fontSize: 15,
@@ -229,23 +229,47 @@ class TheData extends ViewModelWidget<DanaSosialAdminViewModel> {
             trailing: viewModel.isLogin == null
                 ? null
                 : (viewModel.isLogin == true
-                    ? Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: mainColor,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            viewModel.goToEditDanaSosial(int.parse(viewModel
-                                .danaSosialModelList[index].idDanaSosial!));
-                          },
-                          icon: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
+                    ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: mainColor,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                viewModel.goToEditDanaSosial(int.parse(viewModel
+                                    .danaSosialModelList[index].idDanaSosial!));
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 10),
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                viewModel.deleteData(int.parse(viewModel
+                                    .danaSosialModelList[index].idDanaSosial!));
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       )
                     : null),
           ),

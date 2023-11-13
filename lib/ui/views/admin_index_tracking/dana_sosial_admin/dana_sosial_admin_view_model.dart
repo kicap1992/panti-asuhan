@@ -17,17 +17,45 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
   final _httpService = locator<MyHttpServices>();
   final easyLoading = locator<MyEasyLoading>();
 
+  int bulan = DateTime.now().month;
+
   List<DanaSosialModel> danaSosialModelList = [];
 
   String? role;
   bool? isLogin;
 
+  int jumlahDonasi = 0;
+
   Future<void> init() async {
     await getData();
+    await getJumlahDonasi();
     prefs.then((SharedPreferences prefs) {
       role = prefs.getString('role');
       isLogin = prefs.getBool('isLogin');
     });
+    // log.i(bulan);
+  }
+
+  getJumlahDonasi() async {
+    setBusy(true);
+    easyLoading.showLoading();
+    // get the month
+    var bulan = DateTime.now().month;
+    log.i(bulan);
+    // change bulan to string and add 0 if it is less than 10
+    String bulanString = bulan.toString().length == 1 ? '0$bulan' : '$bulan';
+    log.i(bulanString);
+    try {
+      var response = await _httpService.get('pemasukan?bulan=$bulanString');
+      log.i(response.data['jumlah']);
+      // var theJumlahDonasi = response.data['jumlah'];
+      jumlahDonasi = response.data['jumlah'];
+    } catch (e) {
+      log.e(e);
+    } finally {
+      setBusy(false);
+      easyLoading.dismissLoading();
+    }
   }
 
   getData() async {
@@ -35,7 +63,7 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
     easyLoading.showLoading();
     try {
       var response = await _httpService.get('dana_sosial');
-      log.i(response.data);
+      // log.i(response.data);
       danaSosialModelList = [];
 
       var datanya = response.data['data'];
@@ -72,7 +100,7 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
         'filter_dana',
         formData,
       );
-      log.i(response.data);
+      // log.i(response.data);
       danaSosialModelList = [];
 
       var datanya = response.data['data'];
@@ -147,6 +175,48 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
       arguments: DetailDanaSosialViewArguments(
         id: id,
       ),
+    );
+  }
+
+  deleteData(int parse) async {
+    await dialogService
+        .showDialog(
+      title: 'Hapus Data',
+      description: 'Apakah anda yakin ingin menghapus data ini?',
+      buttonTitle: 'Hapus',
+      cancelTitle: 'Batal',
+      buttonTitleColor: Colors.red,
+      cancelTitleColor: Colors.green,
+    )
+        .then(
+      (value) async {
+        if (value!.confirmed) {
+          easyLoading.showLoading();
+          setBusy(true);
+          try {
+            var response = await _httpService.postWithFormData(
+                'hapus_dana_sosial',
+                FormData.fromMap({
+                  'id_dana_sosial': parse,
+                }));
+            log.i(response.data);
+            easyLoading.dismissLoading();
+            easyLoading.showSuccess('Data berhasil dihapus');
+            getData();
+            getJumlahDonasi();
+          } on DioError catch (e) {
+            // easyLoading.dismissLoading();
+            log.e(e);
+            easyLoading.showError('Terjadi kesalahan');
+          } finally {
+            setBusy(false);
+            easyLoading.dismissLoading();
+          }
+        } else {
+          log.i('cancel');
+          return;
+        }
+      },
     );
   }
 }

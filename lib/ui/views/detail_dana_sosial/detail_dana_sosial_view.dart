@@ -33,12 +33,12 @@ class DetailDanaSosialView extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.all(15),
             child: model.danaSosialModel == null
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(),
                   )
                 : (model.danaSosialModel!.bentuk == 'Pemasukan'
-                    ? PemasukanWidget()
-                    : PengeluaranWidget()),
+                    ? const PemasukanWidget()
+                    : const PengeluaranWidget()),
           ),
         );
       },

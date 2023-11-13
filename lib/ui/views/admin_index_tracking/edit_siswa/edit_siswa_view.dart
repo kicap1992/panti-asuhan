@@ -252,7 +252,7 @@ class EditSiswaView extends StatelessWidget {
                             ),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   model.role == 'admin'
                       ? Positioned(
                           top: 0,
@@ -299,7 +299,7 @@ class EditSiswaView extends StatelessWidget {
                             ),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ],
               ),
             ),

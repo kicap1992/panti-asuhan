@@ -51,7 +51,7 @@ class DataSiswaView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '20 orang',
+                      '${model.jumlahSiswa} orang',
                       style: regularTextStyle.copyWith(
                         color: Colors.white,
                         fontSize: 15,
