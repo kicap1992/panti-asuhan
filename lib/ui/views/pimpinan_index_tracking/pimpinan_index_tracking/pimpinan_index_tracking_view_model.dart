@@ -18,11 +18,12 @@ class PimpinanIndexTrackingViewModel extends IndexTrackingViewModel {
 
   final _bottomNavBarList = [
     {
-      'name': 'Siswa',
+      'name': 'List',
       'icon': Icons.people_alt_outlined,
-      'header': 'List Siswa'
+      'header': 'List Anak Panti'
     },
     {'name': 'Dana', 'icon': Icons.money, 'header': 'Dana Sosial'},
+    // {'name': 'Dana', 'icon': Icons.money, 'header': 'Dana Sosial Khusus'},
     {
       'name': 'Profil',
       'icon': Icons.person_4_outlined,
@@ -34,6 +35,7 @@ class PimpinanIndexTrackingViewModel extends IndexTrackingViewModel {
   final List<String> _views = [
     PimpinanIndexTrackingViewRoutes.dataSiswaView,
     PimpinanIndexTrackingViewRoutes.danaSosialAdminView,
+    // PimpinanIndexTrackingViewRoutes.danaSosialKhususView,
     PimpinanIndexTrackingViewRoutes.profilView,
   ];
   Future<void> init() async {

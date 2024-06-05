@@ -32,7 +32,8 @@ class MyHttpServices {
       return await _dio.post(path, data: formData);
     } on DioError catch (e) {
       log.e(e.message);
-      log.e(e.response);
+      log.e(e.response!.statusCode);
+      log.e(e.response!.statusMessage);
       rethrow;
     }
   }

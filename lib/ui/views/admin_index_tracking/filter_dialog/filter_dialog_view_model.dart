@@ -16,6 +16,7 @@ class FilterDialogViewModel extends CustomBaseViewModel {
     'April',
     'Mei',
     'Juni',
+    'Juli',
     'Agustus',
     'September',
     'Oktober',
@@ -26,6 +27,7 @@ class FilterDialogViewModel extends CustomBaseViewModel {
   String tahun = 'Semua';
   List<String> tahunList = [
     'Semua',
+    '2024',
     '2023',
     '2022',
   ];

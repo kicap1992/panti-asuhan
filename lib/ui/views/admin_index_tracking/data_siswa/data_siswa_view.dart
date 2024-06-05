@@ -44,7 +44,7 @@ class DataSiswaView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Total Siswa',
+                      'Total Anak Panti',
                       style: regularTextStyle.copyWith(
                         color: Colors.white,
                         fontSize: 15,
@@ -93,8 +93,23 @@ class DataSiswaView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return Card(
                               child: ListTile(
+                                  leading: Container(
+                                    alignment: Alignment.center,
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color: mainColor,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: Text(
+                                      '${index + 1}',
+                                      style: regularTextStyle.copyWith(
+                                          color: Colors.white),
+                                    ),
+                                  ),
                                   title: Text(
-                                      model.siswaModelList[index].nama ?? '',
+                                      model.otherFunction.capitalizeEachWord(
+                                          model.siswaModelList[index].nama!),
                                       style: boldTextStyle.copyWith(
                                           fontSize: 13, color: mainColor)),
                                   subtitle: Text(

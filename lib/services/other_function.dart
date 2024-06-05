@@ -46,4 +46,61 @@ class OtherFunction {
         return '';
     }
   }
+
+  String changeMonthYear(String s) {
+    // get the last 2 digits
+    String month = s.substring(s.length - 2);
+    // get the first 4 digits
+    String year = s.substring(0, 4);
+    // return the month and year
+    switch (month) {
+      case '01':
+        return 'Januari $year';
+      case '02':
+        return 'Februari $year';
+      case '03':
+        return 'Maret $year';
+      case '04':
+        return 'April $year';
+      case '05':
+        return 'Mei $year';
+      case '06':
+        return 'Juni $year';
+      case '07':
+        return 'Juli $year';
+      case '08':
+        return 'Agustus $year';
+      case '09':
+        return 'September $year';
+      case '10':
+        return 'Oktober $year';
+      case '11':
+        return 'November $year';
+      case '12':
+        return 'Desember $year';
+      default:
+        return '';
+    }
+  }
+
+  String getDayOfWeek(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    List<String> daysOfWeek = [
+      'Senin',
+      'Selasa',
+      'Rabu',
+      'Kamis',
+      'Jumat',
+      'Sabtu',
+      'Minggu'
+    ];
+    return daysOfWeek[dateTime.weekday - 1];
+  }
+
+  String capitalizeEachWord(String s) {
+    return s
+        .split(' ')
+        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .join(' ');
+  }
 }

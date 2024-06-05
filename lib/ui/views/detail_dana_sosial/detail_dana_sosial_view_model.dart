@@ -15,6 +15,8 @@ class DetailDanaSosialViewModel extends CustomBaseViewModel {
   final _httpService = locator<MyHttpServices>();
   final easyLoading = locator<MyEasyLoading>();
 
+  bool isKhusus = false;
+
   int? idDanaSosial;
   DanaSosialModel? danaSosialModel;
   bool jenisBool = true;
@@ -29,8 +31,14 @@ class DetailDanaSosialViewModel extends CustomBaseViewModel {
 
   TextEditingController bentukController = TextEditingController();
 
-  Future<void> init(int id) async {
+  // my revision syntax
+  TextEditingController jenisBarangController = TextEditingController();
+  TextEditingController jumlahBarangController = TextEditingController();
+  // TextEditingController satuanController = TextEditingController();
+
+  Future<void> init(int id, bool isKhusus) async {
     log.i('init and id: $id');
+    this.isKhusus = isKhusus;
     getData(id);
     idDanaSosial = id;
     prefs.then((SharedPreferences prefs) {
@@ -42,7 +50,10 @@ class DetailDanaSosialViewModel extends CustomBaseViewModel {
     setBusy(true);
     easyLoading.showLoading();
     try {
-      var response = await _httpService.get('dana_sosial_detail?id=$id');
+      String url = isKhusus
+          ? 'dana_sosial_khusus_detail?id=$id'
+          : 'dana_sosial_detail?id=$id';
+      var response = await _httpService.get(url);
       log.i(response.data['data']);
       danaSosialModel = DanaSosialModel.fromJson(response.data['data']);
       namaController.text = danaSosialModel!.nama!;
@@ -53,6 +64,12 @@ class DetailDanaSosialViewModel extends CustomBaseViewModel {
       keteranganController.text = danaSosialModel!.keterangan!;
 
       bentukController.text = danaSosialModel!.bentuk!;
+
+      // my revision syntax
+      jenisBarangController.text = danaSosialModel!.jenisBarang!;
+      jumlahBarangController.text =
+          '${danaSosialModel!.jumlahBarang!} ${danaSosialModel!.satuan!}';
+      // satuanController.text = danaSosialModel!.satuan! ;
 
       if (danaSosialModel!.jenisDonasi == 'Uang') {
         jenisBool = true;
@@ -86,8 +103,9 @@ class DetailDanaSosialViewModel extends CustomBaseViewModel {
           FormData formData = FormData.fromMap({
             'id': idDanaSosial,
           });
-          var response =
-              await _httpService.postWithFormData('dana_sosial_ttd', formData);
+          String url = isKhusus ? 'dana_sosial_khusus_ttd' : 'dana_sosial_ttd';
+
+          var response = await _httpService.postWithFormData(url, formData);
           log.i(response.data);
           getData(idDanaSosial!);
 

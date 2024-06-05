@@ -47,7 +47,7 @@ class ProfilView extends StatelessWidget {
                     SizedBox(width: 15),
                     Expanded(
                       child: Text(
-                        "081 343 434 343",
+                        "085 298 962 023",
                         textAlign: TextAlign.justify,
                         style: regularTextStyle,
                       ),

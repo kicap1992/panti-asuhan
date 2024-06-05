@@ -49,7 +49,7 @@ class EditDialogSiswaView extends StatelessWidget {
                   children: [
                     const Center(
                       child: Text(
-                        'Edit Data Siswa',
+                        'Edit Data Anak Panti',
                         style: boldTextStyle,
                       ),
                     ),

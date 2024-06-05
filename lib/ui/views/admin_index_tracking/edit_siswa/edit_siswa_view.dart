@@ -29,7 +29,7 @@ class EditSiswaView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text(
-              "Informasi Data Siswa",
+              "Informasi Data Anak Panti",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,

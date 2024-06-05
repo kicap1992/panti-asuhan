@@ -16,6 +16,7 @@ class StrukturOrganisasiViewModel extends CustomBaseViewModel {
   Map<String, dynamic> dataKetua = {};
   Map<String, dynamic> dataSekretaris = {};
   Map<String, dynamic> dataBendahara = {};
+  Map<String, dynamic> dataWakilBendahara = {};
 
   Map<String, dynamic> dataPengasuh = {};
   int dataPengasuhLength = 0;
@@ -63,6 +64,7 @@ class StrukturOrganisasiViewModel extends CustomBaseViewModel {
     getData('Ketua', false, null);
     getData('Sekretaris', false, null);
     getData('Bendahara', false, null);
+    getData('Wakil Bendahara', false, null);
     getData('Seksi Pengasuh', true, dataPengasuhLength);
     getData('Seksi Ibadah', true, dataIbadahLength);
     getData('Seksi Pendidikan', true, dataPendidikanLength);
@@ -108,6 +110,8 @@ class StrukturOrganisasiViewModel extends CustomBaseViewModel {
         dataSekretaris = data;
       } else if (jabatan == 'Bendahara') {
         dataBendahara = data;
+      } else if (jabatan == 'Wakil Bendahara') {
+        dataWakilBendahara = data;
       } else if (jabatan == 'Seksi Pengasuh') {
         dataPengasuh = data;
         dataPengasuhLength = length!;

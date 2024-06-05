@@ -56,6 +56,13 @@ class StrukturOrganisasiView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
+                  FirstWidget(
+                    title: 'Wakil Bendahara',
+                    data: model.dataWakilBendahara,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   SecondWidget(
                     title: 'Seksi Pengasuh',
                     data: model.dataPengasuh,

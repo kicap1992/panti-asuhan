@@ -67,12 +67,13 @@ class AdminIndexTrackingView extends StatelessWidget {
                             ? sixthGrey
                             : backgroundColor),
                     title: Text(
-                      item['name'],
+                      model.otherFunction.capitalizeEachWord(item['name']),
                       style: regularTextStyle.copyWith(
                         color: model.currentIndex ==
                                 model.bottomNavBarList.indexOf(item)
                             ? sixthGrey
                             : Colors.grey,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     backgroundColor: model.currentIndex ==

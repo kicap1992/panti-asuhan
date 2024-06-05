@@ -20,6 +20,7 @@ class MyTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.initialValue,
     this.enabled = true,
+    this.maxLength,
   }) : super(key: key);
 
   final String? labelText;
@@ -37,10 +38,12 @@ class MyTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final String? initialValue;
   final bool enabled;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: maxLength,
       enabled: enabled,
       initialValue: initialValue,
       onEditingComplete: onEditingComplete,

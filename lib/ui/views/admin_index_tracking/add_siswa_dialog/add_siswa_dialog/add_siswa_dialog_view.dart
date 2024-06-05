@@ -53,7 +53,7 @@ class AddSiswaDialogView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Tambah Siswa',
+                        'Tambah Anak Panti',
                         style: boldTextStyle.copyWith(
                           fontSize: 16,
                         ),

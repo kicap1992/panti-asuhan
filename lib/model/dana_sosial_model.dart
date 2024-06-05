@@ -7,6 +7,9 @@ class DanaSosialModel {
   String? keterangan;
   String? jenisDonasi;
   String? status;
+  String? jenisBarang;
+  String? satuan;
+  String? jumlahBarang;
 
   String? createdAt;
   String? updatedAt;
@@ -20,6 +23,9 @@ class DanaSosialModel {
       this.keterangan,
       this.jenisDonasi,
       this.status,
+      this.jenisBarang,
+      this.satuan,
+      this.jumlahBarang,
       this.createdAt,
       this.updatedAt});
 
@@ -33,6 +39,9 @@ class DanaSosialModel {
     jenisDonasi = json['jenis'];
     status =
         json['status'] == '0' ? 'Belum Dikonfirmasi' : 'Sudah Dikonfirmasi';
+    jenisBarang = json['jenis_barang'] ?? '';
+    satuan = json['satuan'] ?? '';
+    jumlahBarang = json['jumlah_barang'] ?? '';
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -47,6 +56,9 @@ class DanaSosialModel {
     data['ket'] = keterangan;
     data['jenis'] = jenisDonasi;
     data['status'] = status;
+    data['jenis_barang'] = jenisBarang;
+    data['satuan'] = satuan;
+    data['jumlah_barang'] = jumlahBarang;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;

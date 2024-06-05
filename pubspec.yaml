@@ -53,6 +53,7 @@ dependencies:
   shared_preferences:
   # flutter_hooks:
   http_parser:
+  flutter_file_downloader: ^1.2.1
 
 dev_dependencies:
   flutter_test:

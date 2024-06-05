@@ -4,36 +4,127 @@ import 'package:stacked/stacked.dart';
 import '../../../../app/themes/app_colors.dart';
 import '../../../../app/themes/app_text.dart';
 import '../../../../services/other_function.dart';
-import './dana_sosial_admin_view_model.dart';
+import '../dana_sosial_admin/dana_sosial_admin_view.dart';
+import './dana_sosial_khusus_view_model.dart';
 
-class DanaSosialAdminView extends StatelessWidget {
-  const DanaSosialAdminView({super.key});
+class DanaSosialKhususView extends StatelessWidget {
+  const DanaSosialKhususView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<DanaSosialAdminViewModel>.reactive(
-      viewModelBuilder: () => DanaSosialAdminViewModel(),
-      onViewModelReady: (DanaSosialAdminViewModel model) async {
+    return ViewModelBuilder<DanaSosialKhususViewModel>.reactive(
+      viewModelBuilder: () => DanaSosialKhususViewModel(),
+      onViewModelReady: (DanaSosialKhususViewModel model) async {
         await model.init();
       },
       builder: (
         BuildContext context,
-        DanaSosialAdminViewModel model,
+        DanaSosialKhususViewModel model,
         Widget? child,
       ) {
         return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Text(
-                  "Laporan Harian",
-                  style:
-                      boldTextStyle.copyWith(fontSize: 15, color: Colors.black),
-                ),
-                Container(
+          body: Column(
+            children: [
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: const EdgeInsets.symmetric(
+              //             horizontal: 15, vertical: 10),
+              //         width: double.infinity,
+              //         decoration: BoxDecoration(
+              //           color: mainColor,
+              //           borderRadius: BorderRadius.circular(10),
+              //           boxShadow: [
+              //             BoxShadow(
+              //               color: mainGrey.withOpacity(0.5),
+              //               spreadRadius: 5,
+              //               blurRadius: 7,
+              //               offset: const Offset(
+              //                   0, 3), // changes position of shadow
+              //             ),
+              //           ],
+              //         ),
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             Text(
+              //               'Dana Sosial Bulan Ini',
+              //               style: boldTextStyle.copyWith(
+              //                 color: Colors.white,
+              //                 fontSize: 20,
+              //               ),
+              //             ),
+              //             const SizedBox(height: 10),
+              //             Row(
+              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //               children: [
+              //                 Text(
+              //                   'Total Dana Sosial',
+              //                   style: regularTextStyle.copyWith(
+              //                     color: Colors.white,
+              //                     fontSize: 15,
+              //                   ),
+              //                 ),
+              //                 Text(
+              //                   'Rp. ${OtherFunction().commaFormat(model.jumlahDonasi)}',
+              //                   style: regularTextStyle.copyWith(
+              //                     color: Colors.white,
+              //                     fontSize: 15,
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //             const SizedBox(height: 10),
+              //             Row(
+              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //               children: [
+              //                 Text(
+              //                   'Pengeluaran Dana Sosial',
+              //                   style: regularTextStyle.copyWith(
+              //                     color: Colors.white,
+              //                     fontSize: 15,
+              //                   ),
+              //                 ),
+              //                 Text(
+              //                   'Rp. ${OtherFunction().commaFormat(model.jumlahPengeluaran)}',
+              //                   style: regularTextStyle.copyWith(
+              //                     color: Colors.white,
+              //                     fontSize: 15,
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(width: 10),
+              //     Container(
+              //       width: 50,
+              //       height: 50,
+              //       decoration: const BoxDecoration(
+              //         shape: BoxShape.circle,
+              //         color: mainColor,
+              //       ),
+              //       child: IconButton(
+              //         icon: const Icon(
+              //           Icons.filter_list,
+              //           color: Colors.white,
+              //         ),
+              //         onPressed: () {
+              //           model.filterDialog(context);
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              const SizedBox(height: 10),
+              Expanded(
+                flex: 4,
+                child: Container(
                   padding: const EdgeInsets.all(10),
-                  height: MediaQuery.of(context).size.height * 0.45,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -58,18 +149,15 @@ class DanaSosialAdminView extends StatelessWidget {
                         )
                       : const TheDataNewly(),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  "Laporan Bulanan",
-                  style:
-                      boldTextStyle.copyWith(fontSize: 15, color: Colors.black),
-                ),
-                Container(
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
                   padding: const EdgeInsets.all(15),
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.25,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -90,116 +178,72 @@ class DanaSosialAdminView extends StatelessWidget {
                         ))
                       : const HasilIncomeOutcome(),
                 ),
-                const SizedBox(
-                  height: 30,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: mainGrey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
                 ),
-                Text(
-                  "Laporan Tahunan",
-                  style:
-                      boldTextStyle.copyWith(fontSize: 15, color: Colors.black),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Total Pemasukan :',
+                    ),
+                    const Expanded(child: SizedBox()),
+                    Text(
+                      'Rp. ${OtherFunction().commaFormat(model.totalIncome)}',
+                    )
+                  ],
                 ),
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: mainGrey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset:
-                            const Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: model.yearIncomeOutcome.isNotEmpty
-                      ? const TahunanWidget()
-                      : const Center(
-                          child: Text(
-                            'Tidak ada data',
-                          ),
-                        ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: mainGrey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset:
-                            const Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Total Pemasukan :',
-                          ),
-                          const Expanded(child: SizedBox()),
-                          Text(
-                            'Rp. ${OtherFunction().commaFormat(model.totalIncome)}',
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Total Pengeluaran :',
-                          ),
-                          const Expanded(child: SizedBox()),
-                          Text(
-                            'Rp. ${OtherFunction().commaFormat(model.totalOutcome)}',
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-              ],
-            ),
-          ),
-          floatingActionButton: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              if (model.role == 'admin')
-                FloatingActionButton(
-                  mini: true,
-                  heroTag: 'btn11',
-                  onPressed: () {
-                    model.goToTambahDanaSosial();
-                  },
-                  child: const Icon(Icons.add),
-                ),
-              const SizedBox(width: 5),
-              FloatingActionButton(
-                mini: true,
-                heroTag: 'btn22',
-                onPressed: () {
-                  model.filterDialog(context);
-                },
-                child: const Icon(Icons.filter_list),
               ),
             ],
           ),
+          floatingActionButton: model.role == 'admin'
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if (model.role == 'admin')
+                      FloatingActionButton(
+                        heroTag: 'btn1',
+                        onPressed: () {
+                          model.goToTambahDanaSosial();
+                        },
+                        child: const Icon(Icons.add),
+                      ),
+                    if (model.role == 'admin') const SizedBox(width: 10),
+                    if (model.role == 'admin')
+                      FloatingActionButton(
+                        heroTag: 'btn2',
+                        onPressed: () async {
+                          bool res = await model.addDonatur();
+                          model.log.i(res);
+                        },
+                        child: const Icon(Icons.person_add_alt),
+                      ),
+                    const SizedBox(width: 10),
+                    FloatingActionButton(
+                      heroTag: 'btn3',
+                      onPressed: () {
+                        model.filterDialog(context);
+                      },
+                      child: const Icon(Icons.filter_list),
+                    ),
+                  ],
+                )
+              : null,
           floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
         );
       },
@@ -207,246 +251,17 @@ class DanaSosialAdminView extends StatelessWidget {
   }
 }
 
-class TahunanWidget extends ViewModelWidget<DanaSosialAdminViewModel> {
-  const TahunanWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, DanaSosialAdminViewModel viewModel) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (int i = 0; i < viewModel.yearIncomeOutcome.length; i++)
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Tahun ${viewModel.yearIncomeOutcome[i]['tahun']}",
-                        style: boldTextStyle.copyWith(
-                          decoration: TextDecoration.underline,
-                          fontSize: 17,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      if (viewModel.role == 'admin' ||
-                          viewModel.role == 'pimpinan')
-                        Container(
-                          alignment: Alignment.center,
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: mainColor,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: IconButton(
-                            onPressed: () async {
-                              // sini untuk laporan bulanan
-                              await viewModel.goToLaporanTahunan(
-                                  viewModel.yearIncomeOutcome[i]['tahun']);
-                            },
-                            icon: const Icon(
-                              Icons.list_alt_outlined,
-                              color: Colors.white,
-                              size: 15,
-                            ),
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Table(
-                  border: TableBorder.all(
-                    color: Colors.grey,
-                  ),
-                  children: [
-                    const TableRow(children: [
-                      TableCell(
-                          child: Center(
-                              child: Text(
-                        'Pemasukan',
-                        style: boldTextStyle,
-                      ))),
-                      TableCell(
-                          child: Center(
-                              child: Text(
-                        'Pengeluaran',
-                        style: boldTextStyle,
-                      )))
-                    ]),
-                    TableRow(children: [
-                      TableCell(
-                          child: Center(
-                              child: Text(
-                        'Rp. ${OtherFunction().commaFormat(viewModel.yearIncomeOutcome[i]['pemasukan'])}',
-                        style: italicTextStyle,
-                      ))),
-                      TableCell(
-                          child: Center(
-                              child: Text(
-                        'Rp. ${OtherFunction().commaFormat(viewModel.yearIncomeOutcome[i]['pengeluaran'])}',
-                        style: italicTextStyle,
-                      )))
-                    ]),
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-              ],
-            )
-        ],
-      ),
-    );
-  }
-}
-
-class HasilIncomeOutcome extends ViewModelWidget<DanaSosialAdminViewModel> {
-  const HasilIncomeOutcome({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, DanaSosialAdminViewModel viewModel) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (int i = 0; i < viewModel.monthIncomeOutcome.length; i++)
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        viewModel.otherFunction.changeMonthYear(
-                            viewModel.monthIncomeOutcome[i]['month']),
-                        style: boldTextStyle.copyWith(
-                          decoration: TextDecoration.underline,
-                          fontSize: 17,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      if (viewModel.role == 'admin' ||
-                          viewModel.role == 'pimpinan')
-                        Container(
-                          alignment: Alignment.center,
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: mainColor,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: IconButton(
-                            onPressed: () async {
-                              // sini untuk laporan bulanan
-                              await viewModel.goToLaporanBulanan(
-                                  viewModel.monthIncomeOutcome[i]['month']);
-                            },
-                            icon: const Icon(
-                              Icons.list_alt_outlined,
-                              color: Colors.white,
-                              size: 15,
-                            ),
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Table(
-                  border: TableBorder.all(
-                    color: Colors.grey,
-                  ),
-                  children: [
-                    const TableRow(children: [
-                      TableCell(
-                          child: Center(
-                              child: Text(
-                        'Pemasukan',
-                        style: boldTextStyle,
-                      ))),
-                      TableCell(
-                          child: Center(
-                              child: Text(
-                        'Pengeluaran',
-                        style: boldTextStyle,
-                      )))
-                    ]),
-                    TableRow(children: [
-                      TableCell(
-                          child: Center(
-                              child: Text(
-                        'Rp. ${OtherFunction().commaFormat(viewModel.monthIncomeOutcome[i]['income'])}',
-                        style: italicTextStyle,
-                      ))),
-                      TableCell(
-                          child: Center(
-                              child: Text(
-                        'Rp. ${OtherFunction().commaFormat(viewModel.monthIncomeOutcome[i]['outcome'])}',
-                        style: italicTextStyle,
-                      )))
-                    ]),
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-              ],
-            )
-        ],
-      ),
-    );
-  }
-}
-
-class TheData extends ViewModelWidget<DanaSosialAdminViewModel> {
+class TheData extends ViewModelWidget<DanaSosialKhususViewModel> {
   const TheData({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, DanaSosialAdminViewModel viewModel) {
+  Widget build(BuildContext context, DanaSosialKhususViewModel viewModel) {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       itemCount: viewModel.danaSosialModelList.length,
       itemBuilder: (context, index) {
-        // viewModel.log.i(viewModel.danaSosialModelList[index].tanggal);
-
         String jumlahDonasi = viewModel
                     .danaSosialModelList[index].jenisDonasi !=
                 'Barang'
@@ -572,13 +387,13 @@ class TheData extends ViewModelWidget<DanaSosialAdminViewModel> {
   }
 }
 
-class TheDataNewly extends ViewModelWidget<DanaSosialAdminViewModel> {
+class TheDataNewly extends ViewModelWidget<DanaSosialKhususViewModel> {
   const TheDataNewly({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, DanaSosialAdminViewModel viewModel) {
+  Widget build(BuildContext context, DanaSosialKhususViewModel viewModel) {
     return ListView.builder(
       itemCount: viewModel.filteredByDateData.length,
       itemBuilder: (context, index) {
@@ -586,8 +401,16 @@ class TheDataNewly extends ViewModelWidget<DanaSosialAdminViewModel> {
           padding: const EdgeInsets.only(bottom: 30),
           child: Container(
             padding: const EdgeInsets.all(5),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                  color: mainGrey.withOpacity(0.2),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -605,46 +428,11 @@ class TheDataNewly extends ViewModelWidget<DanaSosialAdminViewModel> {
                     i++)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '${viewModel.filteredByDateData[index]['data'][i]['date']} : ${viewModel.otherFunction.getDayOfWeek(viewModel.filteredByDateData[index]['data'][i]['date'])}',
-                            style: italicTextStyle.copyWith(
-                                fontWeight: FontWeight.bold, fontSize: 15),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          if (viewModel.role == 'admin' ||
-                              viewModel.role == 'pimpinan')
-                            Container(
-                              alignment: Alignment.center,
-                              width: 35,
-                              height: 35,
-                              decoration: BoxDecoration(
-                                color: mainColor,
-                                borderRadius: BorderRadius.circular(35),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  viewModel.getLaporanHarian(
-                                      viewModel.filteredByDateData[index]
-                                          ['data'][i]['date'],
-                                      viewModel.otherFunction.getDayOfWeek(
-                                          viewModel.filteredByDateData[index]
-                                              ['data'][i]['date']));
-                                },
-                                icon: const Icon(
-                                  Icons.list_alt_outlined,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                              ),
-                            )
-                        ],
+                      Text(
+                        '${viewModel.filteredByDateData[index]['data'][i]['date']} : ${viewModel.otherFunction.getDayOfWeek(viewModel.filteredByDateData[index]['data'][i]['date'])}',
+                        style: italicTextStyle.copyWith(
+                            fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       const SizedBox(
                         height: 10,
@@ -810,8 +598,8 @@ class TheDataNewly extends ViewModelWidget<DanaSosialAdminViewModel> {
                                           horizontal: 4,
                                         ),
                                         child: Wrap(
-                                          spacing: 5,
                                           runSpacing: 10,
+                                          spacing: 5,
                                           children: [
                                             GestureDetector(
                                               onTap: () {
@@ -869,30 +657,80 @@ class TheDataNewly extends ViewModelWidget<DanaSosialAdminViewModel> {
   }
 }
 
-class JenisIconContainer extends StatelessWidget {
-  const JenisIconContainer({
+class HasilIncomeOutcome extends ViewModelWidget<DanaSosialKhususViewModel> {
+  const HasilIncomeOutcome({
     super.key,
-    required this.color,
-    required this.icon,
   });
 
-  final Color color;
-  final IconData icon;
-
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 20,
-      height: 20,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: 15,
+  Widget build(BuildContext context, DanaSosialKhususViewModel viewModel) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (int i = 0; i < viewModel.monthIncomeOutcome.length; i++)
+            Column(
+              children: [
+                Text(
+                  viewModel.otherFunction.changeMonthYear(
+                      viewModel.monthIncomeOutcome[i]['month']),
+                  style: boldTextStyle.copyWith(
+                    decoration: TextDecoration.underline,
+                    fontSize: 17,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Table(
+                  border: TableBorder.all(
+                    color: Colors.grey,
+                  ),
+                  children: [
+                    const TableRow(children: [
+                      TableCell(
+                          child: Center(
+                              child: Text(
+                        'Pemasukan',
+                        style: boldTextStyle,
+                      ))),
+                      TableCell(
+                          child: Center(
+                              child: Text(
+                        'Pengeluaran',
+                        style: boldTextStyle,
+                      )))
+                    ]),
+                    TableRow(children: [
+                      TableCell(
+                          child: Center(
+                              child: Text(
+                        'Rp. ${OtherFunction().commaFormat(viewModel.monthIncomeOutcome[i]['income'])}',
+                        style: italicTextStyle,
+                      ))),
+                      TableCell(
+                          child: Center(
+                              child: Text(
+                        'Rp. ${OtherFunction().commaFormat(viewModel.monthIncomeOutcome[i]['outcome'])}',
+                        style: italicTextStyle,
+                      )))
+                    ]),
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Divider(
+                  color: Colors.grey,
+                  thickness: 1,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+              ],
+            )
+        ],
       ),
     );
   }

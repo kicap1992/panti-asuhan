@@ -11,18 +11,20 @@ import 'package:panti_asuhan/ui/views/admin_index_tracking/admin_index_tracking_
     as _i4;
 import 'package:panti_asuhan/ui/views/admin_index_tracking/dana_sosial_admin/dana_sosial_admin_view.dart'
     as _i11;
-import 'package:panti_asuhan/ui/views/admin_index_tracking/data_siswa/data_siswa_view.dart'
+import 'package:panti_asuhan/ui/views/admin_index_tracking/dana_sosial_khusus/dana_sosial_khusus_view.dart'
     as _i12;
+import 'package:panti_asuhan/ui/views/admin_index_tracking/data_siswa/data_siswa_view.dart'
+    as _i13;
 import 'package:panti_asuhan/ui/views/admin_index_tracking/edit_siswa/edit_siswa_view.dart'
     as _i6;
 import 'package:panti_asuhan/ui/views/admin_index_tracking/profil/profil_view.dart'
-    as _i13;
-import 'package:panti_asuhan/ui/views/admin_index_tracking/sejarah/sejarah_view.dart'
-    as _i15;
-import 'package:panti_asuhan/ui/views/admin_index_tracking/struktur_organisasi/struktur_organisasi_view.dart'
-    as _i16;
-import 'package:panti_asuhan/ui/views/admin_index_tracking/visi_misi/visi_misi_view.dart'
     as _i14;
+import 'package:panti_asuhan/ui/views/admin_index_tracking/sejarah/sejarah_view.dart'
+    as _i16;
+import 'package:panti_asuhan/ui/views/admin_index_tracking/struktur_organisasi/struktur_organisasi_view.dart'
+    as _i17;
+import 'package:panti_asuhan/ui/views/admin_index_tracking/visi_misi/visi_misi_view.dart'
+    as _i15;
 import 'package:panti_asuhan/ui/views/detail_dana_sosial/detail_dana_sosial_view.dart'
     as _i7;
 import 'package:panti_asuhan/ui/views/login_screen/login_screen_view.dart'
@@ -36,7 +38,7 @@ import 'package:panti_asuhan/ui/views/tambah_dana_sosial/tambah_dana_sosial_view
 import 'package:panti_asuhan/ui/views/user_index_tracking/user_index_tracking_view.dart'
     as _i9;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i17;
+import 'package:stacked_services/stacked_services.dart' as _i18;
 
 class Routes {
   static const splashScreenView = '/';
@@ -126,8 +128,12 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i5.TambahDanaSosialView: (data) {
+      final args = data.getArgs<TambahDanaSosialViewArguments>(
+        orElse: () => const TambahDanaSosialViewArguments(),
+      );
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i5.TambahDanaSosialView(),
+        builder: (context) =>
+            _i5.TambahDanaSosialView(key: args.key, isKhusus: args.isKhusus),
         settings: data,
         maintainState: false,
       );
@@ -144,8 +150,8 @@ class StackedRouter extends _i1.RouterBase {
     _i7.DetailDanaSosialView: (data) {
       final args = data.getArgs<DetailDanaSosialViewArguments>(nullOk: false);
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) =>
-            _i7.DetailDanaSosialView(key: args.key, id: args.id),
+        builder: (context) => _i7.DetailDanaSosialView(
+            key: args.key, id: args.id, isKhusus: args.isKhusus),
         settings: data,
         maintainState: false,
       );
@@ -172,6 +178,22 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
+class TambahDanaSosialViewArguments {
+  const TambahDanaSosialViewArguments({
+    this.key,
+    this.isKhusus = false,
+  });
+
+  final _i10.Key? key;
+
+  final bool isKhusus;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "isKhusus": "$isKhusus"}';
+  }
+}
+
 class EditSiswaViewArguments {
   const EditSiswaViewArguments({
     required this.idSiswa,
@@ -192,20 +214,25 @@ class DetailDanaSosialViewArguments {
   const DetailDanaSosialViewArguments({
     this.key,
     required this.id,
+    this.isKhusus = false,
   });
 
   final _i10.Key? key;
 
   final int id;
 
+  final bool isKhusus;
+
   @override
   String toString() {
-    return '{"key": "$key", "id": "$id"}';
+    return '{"key": "$key", "id": "$id", "isKhusus": "$isKhusus"}';
   }
 }
 
 class AdminIndexTrackingViewRoutes {
   static const danaSosialAdminView = 'dana-sosial-admin-view';
+
+  static const danaSosialKhususView = 'dana-sosial-khusus-view';
 
   static const dataSiswaView = 'data-siswa-view';
 
@@ -219,6 +246,7 @@ class AdminIndexTrackingViewRoutes {
 
   static const all = <String>{
     danaSosialAdminView,
+    danaSosialKhususView,
     dataSiswaView,
     profilView,
     visiMisiView,
@@ -234,24 +262,28 @@ class AdminIndexTrackingViewRouter extends _i1.RouterBase {
       page: _i11.DanaSosialAdminView,
     ),
     _i1.RouteDef(
+      AdminIndexTrackingViewRoutes.danaSosialKhususView,
+      page: _i12.DanaSosialKhususView,
+    ),
+    _i1.RouteDef(
       AdminIndexTrackingViewRoutes.dataSiswaView,
-      page: _i12.DataSiswaView,
+      page: _i13.DataSiswaView,
     ),
     _i1.RouteDef(
       AdminIndexTrackingViewRoutes.profilView,
-      page: _i13.ProfilView,
+      page: _i14.ProfilView,
     ),
     _i1.RouteDef(
       AdminIndexTrackingViewRoutes.visiMisiView,
-      page: _i14.VisiMisiView,
+      page: _i15.VisiMisiView,
     ),
     _i1.RouteDef(
       AdminIndexTrackingViewRoutes.sejarahView,
-      page: _i15.SejarahView,
+      page: _i16.SejarahView,
     ),
     _i1.RouteDef(
       AdminIndexTrackingViewRoutes.strukturOrganisasiView,
-      page: _i16.StrukturOrganisasiView,
+      page: _i17.StrukturOrganisasiView,
     ),
   ];
 
@@ -263,37 +295,44 @@ class AdminIndexTrackingViewRouter extends _i1.RouterBase {
         maintainState: false,
       );
     },
-    _i12.DataSiswaView: (data) {
+    _i12.DanaSosialKhususView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i12.DataSiswaView(),
+        builder: (context) => const _i12.DanaSosialKhususView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i13.ProfilView: (data) {
+    _i13.DataSiswaView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i13.ProfilView(),
+        builder: (context) => const _i13.DataSiswaView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i14.VisiMisiView: (data) {
+    _i14.ProfilView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i14.VisiMisiView(),
+        builder: (context) => const _i14.ProfilView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i15.SejarahView: (data) {
+    _i15.VisiMisiView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i15.SejarahView(),
+        builder: (context) => const _i15.VisiMisiView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i16.StrukturOrganisasiView: (data) {
+    _i16.SejarahView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i16.StrukturOrganisasiView(),
+        builder: (context) => const _i16.SejarahView(),
+        settings: data,
+        maintainState: false,
+      );
+    },
+    _i17.StrukturOrganisasiView: (data) {
+      return _i10.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i17.StrukturOrganisasiView(),
         settings: data,
         maintainState: false,
       );
@@ -309,12 +348,15 @@ class AdminIndexTrackingViewRouter extends _i1.RouterBase {
 class PimpinanIndexTrackingViewRoutes {
   static const danaSosialAdminView = 'dana-sosial-admin-view';
 
+  static const danaSosialKhususView = 'dana-sosial-khusus-view';
+
   static const dataSiswaView = 'data-siswa-view';
 
   static const profilView = 'profil-view';
 
   static const all = <String>{
     danaSosialAdminView,
+    danaSosialKhususView,
     dataSiswaView,
     profilView,
   };
@@ -327,12 +369,16 @@ class PimpinanIndexTrackingViewRouter extends _i1.RouterBase {
       page: _i11.DanaSosialAdminView,
     ),
     _i1.RouteDef(
+      PimpinanIndexTrackingViewRoutes.danaSosialKhususView,
+      page: _i12.DanaSosialKhususView,
+    ),
+    _i1.RouteDef(
       PimpinanIndexTrackingViewRoutes.dataSiswaView,
-      page: _i12.DataSiswaView,
+      page: _i13.DataSiswaView,
     ),
     _i1.RouteDef(
       PimpinanIndexTrackingViewRoutes.profilView,
-      page: _i13.ProfilView,
+      page: _i14.ProfilView,
     ),
   ];
 
@@ -344,16 +390,23 @@ class PimpinanIndexTrackingViewRouter extends _i1.RouterBase {
         maintainState: false,
       );
     },
-    _i12.DataSiswaView: (data) {
+    _i12.DanaSosialKhususView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i12.DataSiswaView(),
+        builder: (context) => const _i12.DanaSosialKhususView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i13.ProfilView: (data) {
+    _i13.DataSiswaView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i13.ProfilView(),
+        builder: (context) => const _i13.DataSiswaView(),
+        settings: data,
+        maintainState: false,
+      );
+    },
+    _i14.ProfilView: (data) {
+      return _i10.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i14.ProfilView(),
         settings: data,
         maintainState: false,
       );
@@ -369,6 +422,8 @@ class PimpinanIndexTrackingViewRouter extends _i1.RouterBase {
 class UserIndexTrackingViewRoutes {
   static const danaSosialAdminView = 'dana-sosial-admin-view';
 
+  static const danaSosialKhususView = 'dana-sosial-khusus-view';
+
   static const dataSiswaView = 'data-siswa-view';
 
   static const profilView = 'profil-view';
@@ -381,6 +436,7 @@ class UserIndexTrackingViewRoutes {
 
   static const all = <String>{
     danaSosialAdminView,
+    danaSosialKhususView,
     dataSiswaView,
     profilView,
     visiMisiView,
@@ -396,24 +452,28 @@ class UserIndexTrackingViewRouter extends _i1.RouterBase {
       page: _i11.DanaSosialAdminView,
     ),
     _i1.RouteDef(
+      UserIndexTrackingViewRoutes.danaSosialKhususView,
+      page: _i12.DanaSosialKhususView,
+    ),
+    _i1.RouteDef(
       UserIndexTrackingViewRoutes.dataSiswaView,
-      page: _i12.DataSiswaView,
+      page: _i13.DataSiswaView,
     ),
     _i1.RouteDef(
       UserIndexTrackingViewRoutes.profilView,
-      page: _i13.ProfilView,
+      page: _i14.ProfilView,
     ),
     _i1.RouteDef(
       UserIndexTrackingViewRoutes.visiMisiView,
-      page: _i14.VisiMisiView,
+      page: _i15.VisiMisiView,
     ),
     _i1.RouteDef(
       UserIndexTrackingViewRoutes.sejarahView,
-      page: _i15.SejarahView,
+      page: _i16.SejarahView,
     ),
     _i1.RouteDef(
       UserIndexTrackingViewRoutes.strukturOrganisasiView,
-      page: _i16.StrukturOrganisasiView,
+      page: _i17.StrukturOrganisasiView,
     ),
   ];
 
@@ -425,37 +485,44 @@ class UserIndexTrackingViewRouter extends _i1.RouterBase {
         maintainState: false,
       );
     },
-    _i12.DataSiswaView: (data) {
+    _i12.DanaSosialKhususView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i12.DataSiswaView(),
+        builder: (context) => const _i12.DanaSosialKhususView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i13.ProfilView: (data) {
+    _i13.DataSiswaView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i13.ProfilView(),
+        builder: (context) => const _i13.DataSiswaView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i14.VisiMisiView: (data) {
+    _i14.ProfilView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i14.VisiMisiView(),
+        builder: (context) => const _i14.ProfilView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i15.SejarahView: (data) {
+    _i15.VisiMisiView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i15.SejarahView(),
+        builder: (context) => const _i15.VisiMisiView(),
         settings: data,
         maintainState: false,
       );
     },
-    _i16.StrukturOrganisasiView: (data) {
+    _i16.SejarahView: (data) {
       return _i10.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i16.StrukturOrganisasiView(),
+        builder: (context) => const _i16.SejarahView(),
+        settings: data,
+        maintainState: false,
+      );
+    },
+    _i17.StrukturOrganisasiView: (data) {
+      return _i10.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i17.StrukturOrganisasiView(),
         settings: data,
         maintainState: false,
       );
@@ -468,7 +535,7 @@ class UserIndexTrackingViewRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i17.NavigationService {
+extension NavigatorStateExtension on _i18.NavigationService {
   Future<dynamic> navigateToSplashScreenView([
     int? routerId,
     bool preventDuplicates = true,
@@ -511,14 +578,17 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToTambahDanaSosialView([
+  Future<dynamic> navigateToTambahDanaSosialView({
+    _i10.Key? key,
+    bool isKhusus = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.tambahDanaSosialView,
+        arguments: TambahDanaSosialViewArguments(key: key, isKhusus: isKhusus),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -545,6 +615,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   Future<dynamic> navigateToDetailDanaSosialView({
     _i10.Key? key,
     required int id,
+    bool isKhusus = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -552,7 +623,8 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.detailDanaSosialView,
-        arguments: DetailDanaSosialViewArguments(key: key, id: id),
+        arguments:
+            DetailDanaSosialViewArguments(key: key, id: id, isKhusus: isKhusus),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -596,6 +668,22 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(AdminIndexTrackingViewRoutes.danaSosialAdminView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic>
+      navigateToNestedDanaSosialKhususViewInAdminIndexTrackingViewRouter([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(
+        AdminIndexTrackingViewRoutes.danaSosialKhususView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -691,6 +779,22 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic>
+      navigateToNestedDanaSosialKhususViewInPimpinanIndexTrackingViewRouter([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(
+        PimpinanIndexTrackingViewRoutes.danaSosialKhususView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic>
       navigateToNestedDataSiswaViewInPimpinanIndexTrackingViewRouter([
     int? routerId,
     bool preventDuplicates = true,
@@ -728,6 +832,21 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(UserIndexTrackingViewRoutes.danaSosialAdminView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic>
+      navigateToNestedDanaSosialKhususViewInUserIndexTrackingViewRouter([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(UserIndexTrackingViewRoutes.danaSosialKhususView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -848,14 +967,17 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithTambahDanaSosialView([
+  Future<dynamic> replaceWithTambahDanaSosialView({
+    _i10.Key? key,
+    bool isKhusus = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.tambahDanaSosialView,
+        arguments: TambahDanaSosialViewArguments(key: key, isKhusus: isKhusus),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -882,6 +1004,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   Future<dynamic> replaceWithDetailDanaSosialView({
     _i10.Key? key,
     required int id,
+    bool isKhusus = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -889,7 +1012,8 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.detailDanaSosialView,
-        arguments: DetailDanaSosialViewArguments(key: key, id: id),
+        arguments:
+            DetailDanaSosialViewArguments(key: key, id: id, isKhusus: isKhusus),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -934,6 +1058,22 @@ extension NavigatorStateExtension on _i17.NavigationService {
   ]) async {
     return replaceWith<dynamic>(
         AdminIndexTrackingViewRoutes.danaSosialAdminView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic>
+      replaceWithNestedDanaSosialKhususViewInAdminIndexTrackingViewRouter([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(
+        AdminIndexTrackingViewRoutes.danaSosialKhususView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1029,6 +1169,22 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic>
+      replaceWithNestedDanaSosialKhususViewInPimpinanIndexTrackingViewRouter([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(
+        PimpinanIndexTrackingViewRoutes.danaSosialKhususView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic>
       replaceWithNestedDataSiswaViewInPimpinanIndexTrackingViewRouter([
     int? routerId,
     bool preventDuplicates = true,
@@ -1066,6 +1222,22 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(UserIndexTrackingViewRoutes.danaSosialAdminView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic>
+      replaceWithNestedDanaSosialKhususViewInUserIndexTrackingViewRouter([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(
+        UserIndexTrackingViewRoutes.danaSosialKhususView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

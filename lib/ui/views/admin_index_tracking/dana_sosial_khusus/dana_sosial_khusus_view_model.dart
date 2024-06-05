@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../app/app.dialogs.dart';
@@ -14,19 +12,16 @@ import '../../../../services/http_services.dart';
 import '../../../../services/my_easyloading.dart';
 import '../../../../services/other_function.dart';
 
-class DanaSosialAdminViewModel extends CustomBaseViewModel {
-  final log = getLogger('DanaSosialAdminViewModel');
+class DanaSosialKhususViewModel extends CustomBaseViewModel {
+  final log = getLogger('DanaSosialKhususViewModel');
   final _httpService = locator<MyHttpServices>();
   final easyLoading = locator<MyEasyLoading>();
-  // final otherF
-  String url = dotenv.env['url']!;
 
   int bulan = DateTime.now().month;
 
   List<DanaSosialModel> danaSosialModelList = [];
   List<Map<String, dynamic>> filteredByDateData = []; // newly added
   List<Map<String, dynamic>> monthIncomeOutcome = []; // newly added
-  List<Map<String, dynamic>> yearIncomeOutcome = []; // newly added
   int totalIncome = 0; // newly added
   int totalOutcome = 0; // newly added
 
@@ -51,13 +46,14 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
     easyLoading.showLoading();
     // get the month
     var bulan = DateTime.now().month;
-    // log.i(bulan);
+    log.i(bulan);
     // change bulan to string and add 0 if it is less than 10
     String bulanString = bulan.toString().length == 1 ? '0$bulan' : '$bulan';
-    // log.i(bulanString);
+    log.i(bulanString);
     try {
-      var response = await _httpService.get('pemasukan?bulan=$bulanString');
-      // log.i(response.data['jumlah']);
+      var response =
+          await _httpService.get('pemasukan_khusus?bulan=$bulanString');
+      log.i(response.data['jumlah']);
       // var theJumlahDonasi = response.data['jumlah'];
       jumlahDonasi = response.data['jumlah'];
       jumlahPengeluaran = response.data['jumlah_pengeluaran'];
@@ -73,7 +69,7 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
     setBusy(true);
     easyLoading.showLoading();
     try {
-      var response = await _httpService.get('dana_sosial');
+      var response = await _httpService.get('dana_sosial_khusus');
       // log.i(response.data);
       danaSosialModelList = [];
 
@@ -85,31 +81,15 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
         }
       }
 
-      changeByDate(danaSosialModelList);
-      getTahunan();
+      setBusy(false);
       notifyListeners();
       // log.i(danaSosialModelList.length);
+      changeByDate(danaSosialModelList);
     } catch (e) {
       log.e(e);
-    } finally {
       setBusy(false);
+    } finally {
       easyLoading.dismissLoading();
-    }
-  }
-
-  getTahunan() async {
-    try {
-      var response = await _httpService.get('data_tahunan');
-
-      var datanya = response.data['data'];
-      log.i(datanya.length);
-      for (int i = 0; i < datanya.length; i++) {
-        log.i(datanya[i]);
-        yearIncomeOutcome.add(datanya[i]);
-      }
-      notifyListeners();
-    } catch (e) {
-      log.e(e);
     }
   }
 
@@ -190,7 +170,10 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
   }
 
   goToTambahDanaSosial() {
-    navigationService.navigateTo(Routes.tambahDanaSosialView);
+    navigationService.navigateTo(
+      Routes.tambahDanaSosialView,
+      arguments: const TambahDanaSosialViewArguments(isKhusus: true),
+    );
   }
 
   getFilter(String sql) async {
@@ -201,7 +184,7 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
     });
     try {
       var response = await _httpService.postWithFormData(
-        'filter_dana',
+        'filter_dana_khusus',
         formData,
       );
       // log.i(response.data);
@@ -218,9 +201,8 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
       }
 
       setBusy(false);
-      changeByDate(danaSosialModelList);
       notifyListeners();
-      // log.i(danaSosialModelList);
+      log.i(danaSosialModelList);
     } catch (e) {
       log.e(e);
       setBusy(false);
@@ -260,7 +242,7 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
       }
 
       String sql =
-          'Select * from tb_dana_sosial where $jenisDonasi$bulan$tahun$status';
+          'Select * from tb_dana_sosial_khusus where $jenisDonasi$bulan$tahun$status';
 
       // check the last 3 character if it is 'or ' then remove it
       // if (sql.substring(sql.length - 3) == 'or ') {
@@ -270,7 +252,7 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
         sql = sql.substring(0, sql.length - 4);
       }
 
-      // log.i(sql);
+      log.i(sql);
 
       getFilter(sql);
     }
@@ -281,6 +263,7 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
       Routes.detailDanaSosialView,
       arguments: DetailDanaSosialViewArguments(
         id: id,
+        isKhusus: true,
       ),
     );
   }
@@ -301,12 +284,12 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
           easyLoading.showLoading();
           setBusy(true);
           try {
-            await _httpService.postWithFormData(
-                'hapus_dana_sosial',
+            var response = await _httpService.postWithFormData(
+                'hapus_dana_sosial_khusus',
                 FormData.fromMap({
                   'id_dana_sosial': parse,
                 }));
-            // log.i(response.data);
+            log.i(response.data);
             easyLoading.dismissLoading();
             easyLoading.showSuccess('Data berhasil dihapus');
             getData();
@@ -320,152 +303,25 @@ class DanaSosialAdminViewModel extends CustomBaseViewModel {
             easyLoading.dismissLoading();
           }
         } else {
-          // log.i('cancel');
+          log.i('cancel');
           return;
         }
       },
     );
   }
 
-  goToLaporanBulanan(data) async {
-    // seeperate by "-", the first index is year, the second index is month
-    String year = data.substring(0, data.indexOf('-'));
-    String month = data.substring(data.indexOf('-') + 1);
+  Future<bool> addDonatur() async {
+    var res = await dialogService.showCustomDialog(
+      variant: DialogType.addDonaturDialogView,
+    );
 
-    try {
-      setBusy(true);
-      easyLoading.customLoading("Mengunduh Laporan Bulanan...");
-      await _httpService.get('laporan_bulanan?tahun=$year&bulan=$month');
-
-      // if (response.data) {
-
-      String urlPdf = '${url}assets/pdf/laporan_bulanan_$month,$year.pdf';
-      log.i(urlPdf);
-      FileDownloader.downloadFile(
-          url: urlPdf,
-          // name: "THE FILE NAME AFTER DOWNLOADING", //(optional)
-          onProgress: (fileName, progress) {
-            // change progress to 0-1
-            double progressPercent = progress / 100;
-
-            easyLoading.showProgress(
-              progressPercent,
-              "Downloading: $progress%",
-            );
-          },
-          onDownloadCompleted: (String path) {
-            easyLoading.dismissLoading();
-            snackbarService.showSnackbar(
-              message: "Laporan Bulanan Berhasil Tersimpan di $path",
-              duration: const Duration(seconds: 3),
-            );
-          },
-          onDownloadError: (String error) {
-            // log.i('DOWNLOAD ERROR: $error');
-            snackbarService.showSnackbar(
-              message: "Laporan Bulanan Gagal Tersimpan: $error",
-              duration: const Duration(seconds: 3),
-            );
-          });
-      // }
-    } catch (e) {
-      log.e(e);
-    } finally {
-      setBusy(false);
-      easyLoading.dismissLoading();
+    if (res!.confirmed) {
+      snackbarService.showSnackbar(
+        message: 'Berhasil menambahkan donatur',
+        duration: const Duration(seconds: 2),
+      );
+      return true;
     }
-  }
-
-  getLaporanHarian(String filteredByDateData, String dayOfWeek) async {
-    String date = filteredByDateData;
-    String day = dayOfWeek;
-
-    try {
-      setBusy(true);
-      easyLoading.customLoading("Mengunduh Laporan Harian...");
-      await _httpService.get('laporan_harian?tanggal=$date&hari=$day');
-
-      String urlPdf = '${url}assets/pdf/laporan_harian_$day,$date.pdf';
-      log.i(urlPdf);
-
-      FileDownloader.downloadFile(
-          url: urlPdf,
-          // name: "THE FILE NAME AFTER DOWNLOADING", //(optional)
-          onProgress: (fileName, progress) {
-            // change progress to 0-1
-            double progressPercent = progress / 100;
-
-            easyLoading.showProgress(
-              progressPercent,
-              "Downloading: $progress%",
-            );
-          },
-          onDownloadCompleted: (String path) {
-            easyLoading.dismissLoading();
-            snackbarService.showSnackbar(
-              message: "Laporan Harian Berhasil Tersimpan di $path",
-              duration: const Duration(seconds: 3),
-            );
-          },
-          onDownloadError: (String error) {
-            // log.i('DOWNLOAD ERROR: $error');
-            snackbarService.showSnackbar(
-              message: "Laporan Harian Gagal Tersimpan: $error",
-              duration: const Duration(seconds: 3),
-            );
-          });
-    } catch (e) {
-      log.e(e);
-    } finally {
-      setBusy(false);
-      easyLoading.dismissLoading();
-    }
-  }
-
-  goToLaporanTahunan(String yearIncomeOutcome) async {
-    // log.i(yearIncomeOutcome);
-
-    try {
-      setBusy(true);
-      easyLoading.customLoading("Mengunduh Laporan Tahun...");
-      await _httpService.get('laporan_tahunan?tahun=$yearIncomeOutcome');
-
-      // if (response.data) {
-
-      String urlPdf = '${url}assets/pdf/laporan_tahunan_$yearIncomeOutcome.pdf';
-      log.i(urlPdf);
-      FileDownloader.downloadFile(
-          url: urlPdf,
-          // name: "THE FILE NAME AFTER DOWNLOADING", //(optional)
-          onProgress: (fileName, progress) {
-            // change progress to 0-1
-            double progressPercent = progress / 100;
-
-            easyLoading.showProgress(
-              progressPercent,
-              "Downloading: $progress%",
-            );
-          },
-          onDownloadCompleted: (String path) {
-            easyLoading.dismissLoading();
-            snackbarService.showSnackbar(
-              message: "Laporan Tahunan Berhasil Tersimpan di $path",
-              duration: const Duration(seconds: 3),
-            );
-          },
-          onDownloadError: (String error) {
-            // log.i('DOWNLOAD ERROR: $error');
-            snackbarService.showSnackbar(
-              message: "Laporan Tahunan Gagal Tersimpan: $error",
-              duration: const Duration(seconds: 3),
-            );
-          });
-      // }
-    } catch (e) {
-      log.e(e);
-    } finally {
-      setBusy(false);
-      easyLoading.dismissLoading();
-    }
+    return false;
   }
 }

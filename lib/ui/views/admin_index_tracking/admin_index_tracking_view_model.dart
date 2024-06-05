@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panti_asuhan/services/other_function.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -12,14 +13,16 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final otherFunction = locator<OtherFunction>();
 
   final _bottomNavBarList = [
     {
-      'name': 'Siswa',
+      'name': 'List',
       'icon': Icons.people_alt_outlined,
-      'header': 'List Siswa'
+      'header': 'List Anak Panti'
     },
     {'name': 'Dana', 'icon': Icons.money, 'header': 'Dana Sosial'},
+    // {'name': 'Dana', 'icon': Icons.money, 'header': 'Dana Sosial Khusus'},
     {
       'name': 'Profil',
       'icon': Icons.person_4_outlined,
@@ -39,6 +42,7 @@ class AdminIndexTrackingViewModel extends IndexTrackingViewModel {
   final List<String> _views = [
     AdminIndexTrackingViewRoutes.dataSiswaView,
     AdminIndexTrackingViewRoutes.danaSosialAdminView,
+    // AdminIndexTrackingViewRoutes.danaSosialKhususView,
     AdminIndexTrackingViewRoutes.profilView,
     AdminIndexTrackingViewRoutes.visiMisiView,
     AdminIndexTrackingViewRoutes.sejarahView,

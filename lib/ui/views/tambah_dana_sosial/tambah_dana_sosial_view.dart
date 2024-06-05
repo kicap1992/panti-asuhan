@@ -9,14 +9,19 @@ import '../../widgets/my_textformfield.dart';
 import './tambah_dana_sosial_view_model.dart';
 
 class TambahDanaSosialView extends StatelessWidget {
-  const TambahDanaSosialView({super.key});
+  final bool isKhusus;
+
+  const TambahDanaSosialView({
+    Key? key,
+    this.isKhusus = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TambahDanaSosialViewModel>.reactive(
       viewModelBuilder: () => TambahDanaSosialViewModel(),
       onViewModelReady: (TambahDanaSosialViewModel model) async {
-        await model.init();
+        await model.init(isKhusus);
       },
       builder: (
         BuildContext context,
@@ -66,6 +71,7 @@ class TambahDanaSosialView extends StatelessWidget {
                               // model.setSelectedbentukDonasi(newValue!);
                               model.log.i(newValue);
                               model.bentukDonasi = newValue!;
+
                               model.notifyListeners();
                             },
                             items: model.bentukDonasiList.map((String value) {
@@ -91,13 +97,59 @@ class TambahDanaSosialView extends StatelessWidget {
                         ),
                       ),
                       Visibility(
-                        visible: model.bentukDonasi == 'Pemasukan',
+                        visible: model.bentukDonasi == 'Pemasukan' &&
+                            isKhusus == false,
                         child: MyTextFormField(
                           hintText: "Nama Donatur",
                           controller: model.namaController,
                           maxLines: 1,
                           // validator: Validatorless.required(
                           //     'Nama Donatur tidak boleh kosong'),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.bentukDonasi == 'Pemasukan' &&
+                            isKhusus == true,
+                        child: Container(
+                          width: double.infinity,
+                          height: 60,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                              color: mainColor,
+                            ),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: model.donaturSelected,
+                              onChanged: (String? newValue) {
+                                // model.setSelectedjenisDonasi(newValue!);
+                                model.log.i(newValue);
+                                model.donaturSelected = newValue!;
+                                // check where is the index and get the ['id_donatur']
+
+                                var index = model.listDonatur.indexWhere(
+                                  (element) => element == newValue,
+                                );
+                                model.donaturSelectedIndex = int.parse(
+                                  model.listDonaturMap[index]['id_donatur'],
+                                );
+                                model.log.i(model.donaturSelectedIndex);
+                              },
+                              items: model.listDonatur.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: regularTextStyle.copyWith(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
                         ),
                       ),
                       Visibility(
@@ -141,6 +193,130 @@ class TambahDanaSosialView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      // ini jika barang
+                      if (model.jenisDonasi == 'Barang')
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 20),
+                            Text(
+                              "Jenis Barang",
+                              style:
+                                  regularTextStyle.copyWith(color: mainColor),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: 60,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(
+                                  color: mainColor,
+                                ),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: model.jenisBarangSelected,
+                                  onChanged: (String? newValue) {
+                                    // model.setSelectedjenisDonasi(newValue!);
+                                    model.log.i(newValue);
+                                    model.jenisBarangSelected = newValue!;
+                                    model.changeSatuan(newValue);
+                                    model.notifyListeners();
+                                  },
+                                  items:
+                                      model.jenisBarangList.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: regularTextStyle.copyWith(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      // ini jika barang dan jenis barang beras dll
+                      if (model.jenisDonasi == 'Barang' &&
+                          (model.jenisBarangSelected == 'Beras' ||
+                              model.jenisBarangSelected == 'Mi Instan' ||
+                              model.jenisBarangSelected == 'Telur' ||
+                              model.jenisBarangSelected == 'Gula'))
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 20),
+                            Text(
+                              "Pilih Satuan ${model.jenisBarangSelected}",
+                              style:
+                                  regularTextStyle.copyWith(color: mainColor),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: 60,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(
+                                  color: mainColor,
+                                ),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: model.satuanSelected,
+                                  onChanged: (String? newValue) {
+                                    // model.setSelectedjenisDonasi(newValue!);
+                                    model.log.i(newValue);
+                                    model.satuanSelected = newValue!;
+                                    model.notifyListeners();
+                                  },
+                                  items: model.satuanList.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: regularTextStyle.copyWith(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      // ini jika barang dan jenis barang dll
+                      if (model.jenisDonasi == 'Barang')
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 20),
+                            Text(
+                              "Jumlah ${model.satuanSelected}",
+                              style:
+                                  regularTextStyle.copyWith(color: mainColor),
+                            ),
+                            MyTextFormField(
+                              hintText: "Jumlah ${model.satuanSelected}",
+                              controller: model.jumlahBarangController,
+                              maxLines: 1,
+                              keyboardType: TextInputType.number,
+                              maxLength: 3,
+                              // validator: Validatorless.required(
+                              //     'Nama Donatur tidak boleh kosong'),
+                            ),
+                          ],
+                        ),
+
                       Visibility(
                         visible: model.jenisDonasi == 'Uang',
                         child: const SizedBox(height: 20),
@@ -212,6 +388,15 @@ class TambahDanaSosialView extends StatelessWidget {
                       MyButton(
                         text: "Simpan Data",
                         onPressed: () {
+                          if (isKhusus &&
+                              model.donaturSelected == '-Tiada Donatur-') {
+                            model.snackbarService.showSnackbar(
+                              message: 'Donatur harus diisi terlebih dahulu',
+                              title: 'Gagal',
+                              duration: const Duration(seconds: 2),
+                            );
+                            return;
+                          }
                           if (model.formKey.currentState!.validate()) {
                             model.log.i('Form Valid');
                             model.addData();
